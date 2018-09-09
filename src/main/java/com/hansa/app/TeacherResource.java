@@ -24,6 +24,7 @@ public class TeacherResource {
     @Autowired
     private TutorRepo tutorRepo;
     
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/tutor", method = {RequestMethod.GET})
     public Iterable<Tutor> getTutors() {
         return tutorRepo.findAll();

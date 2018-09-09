@@ -1,4 +1,10 @@
-/Users/sushant/Downloads/gs-accessing-data-mysql-master/complete/src/main/java/hello/User.java
-/Users/sushant/Downloads/gs-accessing-data-mysql-master/complete/src/main/java/hello/UserRepository.java
-/Users/sushant/Downloads/gs-accessing-data-mysql-master/complete/src/main/java/hello/Application.java
-/Users/sushant/Downloads/gs-accessing-data-mysql-master/complete/src/main/java/hello/MainController.java
+/Users/sushant/Documents/tutor-app/tutor-app/src/main/java/com/hansa/app/UserRepository.java
+/Users/sushant/Documents/tutor-app/tutor-app/src/main/java/com/hansa/app/User.java
+/Users/sushant/Documents/tutor-app/tutor-app/src/main/java/com/hansa/app/StudentRepo.java
+/Users/sushant/Documents/tutor-app/tutor-app/src/main/java/com/hansa/app/Tutor.java
+/Users/sushant/Documents/tutor-app/tutor-app/src/main/java/com/hansa/app/StudentResource.java
+/Users/sushant/Documents/tutor-app/tutor-app/src/main/java/com/hansa/app/MainController.java
+/Users/sushant/Documents/tutor-app/tutor-app/src/main/java/com/hansa/app/Application.java
+/Users/sushant/Documents/tutor-app/tutor-app/src/main/java/com/hansa/app/Student.java
+/Users/sushant/Documents/tutor-app/tutor-app/src/main/java/com/hansa/app/TeacherResource.java
+/Users/sushant/Documents/tutor-app/tutor-app/src/main/java/com/hansa/app/TutorRepo.java

@@ -5,13 +5,17 @@
  */
 package com.hansa.app.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -29,14 +33,18 @@ public class Appointment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "student_id")
-    private Long studentId;
-    @Column(name = "tutor_id")
-    private Long tutorId;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
     private String status;
+    
+    @OneToOne(fetch = FetchType.EAGER)
+    Student student;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    Tutor tutor;
+
+    
+    
     public Long getId() {
         return id;
     }
@@ -62,20 +70,24 @@ public class Appointment implements Serializable {
         this.status = status;
     }
 
-    public Long getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public Long getTutorId() {
-        return tutorId;
+    public Tutor getTutor() {
+        return tutor;
     }
 
-    public void setTutorId(Long tutorId) {
-        this.tutorId = tutorId;
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
     }
+    
+    
+
+    
     
 }

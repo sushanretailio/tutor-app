@@ -20,10 +20,10 @@ import org.springframework.data.repository.query.Param;
 public interface AppointmentRepo extends CrudRepository<Appointment, Long> {
     
     
-    @Query("select a from Appointment a where a.studentId =:studentId ")
+    @Query("select a from Appointment a where a.student.id =:studentId ")
     List<Appointment> getByStudent(@Param("studentId") Long studentId) ;
     
-    @Query("select a from Appointment a where a.tutorId =:tutorId ")
+    @Query("select a from Appointment a where a.tutor.id =:tutorId ")
     List<Appointment> getByTutor(@Param("tutorId") Long tutorId) ;
     
     @Query("select a from Appointment a where a.id =:id ")

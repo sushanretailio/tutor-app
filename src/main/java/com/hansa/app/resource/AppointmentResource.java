@@ -62,10 +62,11 @@ public class AppointmentResource {
         Appointment app = appointmentRepo.get(id);
         app.setStatus(status);
         app.setDate(new Date());
-        
+        /*
         Student std = studentRepo.getById(app.getStudentId());
         Tutor tutor = tutorRepo.getById(app.getTutorId());
-        emailService.sendEmail("Your appointment is updated to Status "+status, "Updateed Appointment", tutor.getEmail());
+*/
+        //emailService.sendEmail("Your appointment is updated to Status "+status, "Updateed Appointment", tutor.getEmail());
         return appointmentRepo.save(app);
     }
     
@@ -75,11 +76,12 @@ public class AppointmentResource {
     public Appointment save(@RequestBody Appointment appointment) {
         appointment.setStatus("CREATED");
         appointment.setDate(new Date());
-        
+  
+        /*
         Student std = studentRepo.getById(appointment.getStudentId());
         Tutor tutor = tutorRepo.getById(appointment.getTutorId());
         emailService.sendEmail("You have got a new appointment, Student "+std.getEmail(), "New Request", tutor.getEmail());
-        
+        */
         return appointmentRepo.save(appointment);
     }
     

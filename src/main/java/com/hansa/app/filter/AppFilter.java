@@ -5,7 +5,6 @@
  */
 package com.hansa.app.filter;
 
-import com.hansa.app.interceptor.AppInterceptor;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

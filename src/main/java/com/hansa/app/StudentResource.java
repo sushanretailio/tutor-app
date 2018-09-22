@@ -6,6 +6,8 @@
 package com.hansa.app;
 
 
+import com.hansa.app.repo.StudentRepo;
+import com.hansa.app.data.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;

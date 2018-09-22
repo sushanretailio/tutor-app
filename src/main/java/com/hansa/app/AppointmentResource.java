@@ -6,6 +6,12 @@
 package com.hansa.app;
 
 
+import com.hansa.app.repo.StudentRepo;
+import com.hansa.app.repo.AppointmentRepo;
+import com.hansa.app.repo.TutorRepo;
+import com.hansa.app.data.Student;
+import com.hansa.app.data.Appointment;
+import com.hansa.app.data.Tutor;
 import com.hansa.app.service.EmailService;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;

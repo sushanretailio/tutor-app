@@ -6,7 +6,9 @@
 package com.hansa.app;
 
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -15,5 +17,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface TutorRepo extends CrudRepository<Tutor, Long> {
     
-    
+    @Query("select t from Tutor t where t.id =:id ")
+    Tutor getById(@Param("id") Long id) ;
 }

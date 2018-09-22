@@ -1,10 +1,10 @@
 com/hansa/app/MainController.class
-com/hansa/app/User.class
 com/hansa/app/TutorRepo.class
 com/hansa/app/TeacherResource.class
-com/hansa/app/UserRepository.class
 com/hansa/app/Application.class
-com/hansa/app/StudentResource.class
 com/hansa/app/Student.class
+com/hansa/app/User.class
+com/hansa/app/UserRepository.class
+com/hansa/app/StudentResource.class
 com/hansa/app/Tutor.class
 com/hansa/app/StudentRepo.class

@@ -6,6 +6,7 @@
 package com.hansa.app;
 
 
+import com.hansa.app.service.EmailService;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,6 +27,15 @@ public class AppointmentResource {
     
     @Autowired
     private AppointmentRepo appointmentRepo;
+    
+    @Autowired
+    private EmailService emailService;
+    
+    @Autowired
+    private TutorRepo tutorRepo;
+    
+    @Autowired
+    private StudentRepo  studentRepo;
     
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/appointment/student/{id}", method = {RequestMethod.GET})
@@ -39,10 +50,30 @@ public class AppointmentResource {
     }
     
     @CrossOrigin(origins = "*")
+    @RequestMapping(path = "/appointment/{id}", method = {RequestMethod.PUT})
+    public Appointment update(@PathVariable("id") Long id, @RequestParam("status") String status) {
+        
+        Appointment app = appointmentRepo.get(id);
+        app.setStatus(status);
+        app.setDate(new Date());
+        
+        Student std = studentRepo.getById(app.getStudentId());
+        Tutor tutor = tutorRepo.getById(app.getTutorId());
+        emailService.sendEmail("Your appointment is updated to Status "+status, "Updateed Appointment", tutor.getEmail());
+        return appointmentRepo.save(app);
+    }
+    
+    
+    @CrossOrigin(origins = "*")
     @RequestMapping(path = "/appointment", method = {RequestMethod.POST})
     public Appointment save(@RequestBody Appointment appointment) {
         appointment.setStatus("CREATED");
         appointment.setDate(new Date());
+        
+        Student std = studentRepo.getById(appointment.getStudentId());
+        Tutor tutor = tutorRepo.getById(appointment.getTutorId());
+        emailService.sendEmail("You have got a new appointment, Student "+std.getEmail(), "New Request", tutor.getEmail());
+        
         return appointmentRepo.save(appointment);
     }
     

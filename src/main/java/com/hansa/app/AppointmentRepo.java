@@ -25,4 +25,7 @@ public interface AppointmentRepo extends CrudRepository<Appointment, Long> {
     @Query("select a from Appointment a where a.tutorId =:tutorId ")
     List<Appointment> getByTutor(@Param("tutorId") Long tutorId) ;
     
+    @Query("select a from Appointment a where a.id =:id ")
+    Appointment get(@Param("id") Long tutoridId) ;
+    
 }

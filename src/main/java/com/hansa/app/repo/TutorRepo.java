@@ -7,8 +7,8 @@ package com.hansa.app.repo;
 
 
 import com.hansa.app.data.Tutor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 /**
@@ -16,7 +16,7 @@ import org.springframework.data.repository.query.Param;
  * @author sushant
  */
 
-public interface TutorRepo extends CrudRepository<Tutor, Long> {
+public interface TutorRepo extends JpaRepository<Tutor, Long> {
     
     @Query("select t from Tutor t where t.id =:id ")
     Tutor getById(@Param("id") Long id) ;

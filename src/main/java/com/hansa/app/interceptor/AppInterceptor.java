@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.annotation.Order;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
@@ -18,6 +21,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 
 @Component
+@Order(0)
 public class AppInterceptor extends HandlerInterceptorAdapter {
     
     private Log log = LogFactory.getLog(AppInterceptor.class);
@@ -26,6 +30,11 @@ public class AppInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request ,HttpServletResponse response ,  Object handler) {
         log.info("Interceptor ");
         return true;
+    }
+    
+    @Override
+    public void postHandle(HttpServletRequest hsr, HttpServletResponse hsr1, Object o, @Nullable ModelAndView mav) throws Exception {
+        log.info("POST Interceptor ");
     }
     
 }

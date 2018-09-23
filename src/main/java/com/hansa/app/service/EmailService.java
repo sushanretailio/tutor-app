@@ -23,6 +23,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class EmailService {
+    
+    private final String username = "mailer.hansaa@gmail.com";
+    private final String password = "Oct@2018";
+
 
     @PostConstruct
     void setUp() {
@@ -32,24 +36,20 @@ public class EmailService {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
-        Session.getInstance(props,
+        session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
+                return new PasswordAuthentication("mailer.hansaa@gmail.com", "Oct@2018");
             }
         });
-        session = Session.getDefaultInstance(props);
         log.info("Mail session started");
-
     }
 
     private static final Log log = LogFactory.getFactory().getInstance(EmailService.class);
     private Session session;
 
-    private final String username = "sushant001@gmail.com";
-    private final String password = "12345";
-
+    
     public void sendEmail(String body, String subject, String to) {
         log.info("Sending email to " + to + " , Subject " + subject + ", Body " + body);
         try {
@@ -59,8 +59,10 @@ public class EmailService {
             message.setSubject(subject); 
             message.setText(body);
             Transport.send(message);
+            log.info("Mail sent");
         } catch (Exception ex) {
             log.error(ex.getMessage());
+            ex.printStackTrace();
         }
 
     }

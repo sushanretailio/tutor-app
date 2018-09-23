@@ -8,6 +8,8 @@ package com.hansa.app.resource;
 
 import com.hansa.app.repo.StudentRepo;
 import com.hansa.app.data.Student;
+import com.hansa.app.data.User;
+import com.hansa.app.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,22 +23,31 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+@RequestMapping("/student")
 public class StudentResource {
     
     @Autowired
     private StudentRepo studentRepo;
     
+    @Autowired
+    private UserRepo userRepo;
+    
     @CrossOrigin(origins = "*")
-    @RequestMapping(path = "/student", method = {RequestMethod.GET})
+    @RequestMapping(method = {RequestMethod.GET})
     public Iterable<Student> getTutors() {
         return studentRepo.findAll();
     }
     
     @CrossOrigin(origins = "*")
-    @RequestMapping(path = "/student", method = {RequestMethod.POST})
-    public Student save(@RequestBody Student student) {
-        return studentRepo.save(student);
+    @RequestMapping(method = {RequestMethod.POST})
+    public User save(@RequestBody Student student) {
+        Student std= studentRepo.save(student);
+        User user = new User();
+        user.setRefId(std.getId());
+        user.setType("STUDENT");
+        user.setUserId(std.getMobile());
+        userRepo.save(user);
+        user.setDetail(std);
+        return user;
     }
-    
-    
 }

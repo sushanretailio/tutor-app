@@ -8,7 +8,9 @@ package com.hansa.app.resource;
 
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.data.Tutor;
+import com.hansa.app.data.User;
 import com.hansa.app.model.PagedResponse;
+import com.hansa.app.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +33,10 @@ public class TeacherResource {
     @Autowired
     private TutorRepo tutorRepo;
     
+    @Autowired
+    private UserRepo userRepo;
+    
+    
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(method = {RequestMethod.GET})
     public PagedResponse getTutors(@RequestParam(name="page", required=false) Integer page,@RequestParam(name="size", required = false) Integer size) {
@@ -49,8 +55,15 @@ public class TeacherResource {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(method = {RequestMethod.POST})
-    public Tutor save(@RequestBody Tutor tutor) {
-        return tutorRepo.save(tutor);
+    public User save(@RequestBody Tutor tutor) {
+        Tutor updated= tutorRepo.save(tutor);
+        User user = new User();
+        user.setRefId(updated.getId());
+        user.setType("TUTOR");
+        user.setUserId(updated.getMobile());
+        userRepo.save(user);
+        user.setDetail(updated);
+        return user;
     }
     
     

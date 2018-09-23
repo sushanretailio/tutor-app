@@ -1,7 +1,6 @@
-com/hansa/app/MainController.class
 com/hansa/app/model/TeacherAppointment.class
 com/hansa/app/data/Tutor.class
-com/hansa/app/model/PagedTutor.class
+com/hansa/app/resource/LoginController.class
 com/hansa/app/Application.class
 com/hansa/app/repo/StudentRepo.class
 com/hansa/app/repo/UserRepository.class
@@ -18,3 +17,5 @@ com/hansa/app/service/EmailService.class
 com/hansa/app/data/Student.class
 com/hansa/app/repo/TutorRepo.class
 com/hansa/app/model/StudentAppointment.class
+com/hansa/app/model/PagedResponse.class
+com/hansa/app/repo/UserRepo.class

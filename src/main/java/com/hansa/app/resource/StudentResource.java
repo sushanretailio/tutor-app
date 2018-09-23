@@ -41,6 +41,9 @@ public class StudentResource {
     @CrossOrigin(origins = "*")
     @RequestMapping(method = {RequestMethod.POST})
     public User save(@RequestBody Student student) {
+        if(student.getMobile()==null || student.getMobile().isEmpty()) {
+            throw new RuntimeException("Mobile number cant be empty");
+        }
         Student std= studentRepo.save(student);
         User user = new User();
         user.setRefId(std.getId());

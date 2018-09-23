@@ -56,6 +56,9 @@ public class TeacherResource {
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(method = {RequestMethod.POST})
     public User save(@RequestBody Tutor tutor) {
+        if(tutor.getMobile()==null || tutor.getMobile().isEmpty()) {
+            throw new RuntimeException("Mobile number cant be empty");
+        }
         Tutor updated= tutorRepo.save(tutor);
         User user = new User();
         user.setRefId(updated.getId());

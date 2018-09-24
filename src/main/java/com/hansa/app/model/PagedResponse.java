@@ -17,13 +17,13 @@ public class PagedResponse {
     private int size;
     private boolean next;
     private List contents;
-    private int totalSize;
+    private long totalSize;
 
-    public int getTotalSize() {
+    public long getTotalSize() {
         return totalSize;
     }
 
-    public void setTotalSize(int totalSize) {
+    public void setTotalSize(long totalSize) {
         this.totalSize = totalSize;
     }
     

@@ -10,6 +10,7 @@ import com.hansa.app.repo.StudentRepo;
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +34,7 @@ public class LoginController {
     @Autowired
     private TutorRepo tutorRepo;
     
+    @CrossOrigin(origins = "*")
     @RequestMapping(method=RequestMethod.POST)
     public User login(@RequestBody User user) {
         

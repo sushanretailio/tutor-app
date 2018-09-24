@@ -17,6 +17,17 @@ public class PagedResponse {
     private int size;
     private boolean next;
     private List contents;
+    private int totalSize;
+
+    public int getTotalSize() {
+        return totalSize;
+    }
+
+    public void setTotalSize(int totalSize) {
+        this.totalSize = totalSize;
+    }
+    
+    
 
     public int getPage() {
         return page;

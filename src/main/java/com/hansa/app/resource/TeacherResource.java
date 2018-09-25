@@ -65,6 +65,7 @@ public class TeacherResource {
         user.setRefId(updated.getId());
         user.setType("TUTOR");
         user.setUserId(updated.getMobile());
+        user.setPassword(tutor.getMobile());
         userRepo.save(user);
         user.setDetail(updated);
         return user;

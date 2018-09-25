@@ -49,6 +49,7 @@ public class StudentResource {
         user.setRefId(std.getId());
         user.setType("STUDENT");
         user.setUserId(std.getMobile());
+        user.setPassword(std.getMobile());
         userRepo.save(user);
         user.setDetail(std);
         return user;

@@ -5,12 +5,10 @@
  */
 package com.hansa.app.data;
 
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -33,6 +31,9 @@ public class Tutor {
     private String classcategory;
     private String particularClass;
     private String subjects;
+    private String experience;
+    private String qualification;
+    
 
     public long getId() {
         return id;
@@ -105,6 +106,24 @@ public class Tutor {
     public void setSubjects(String subjects) {
         this.subjects = subjects;
     }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getQualification() {
+        return qualification;
+    }
+
+    public void setQualification(String qualification) {
+        this.qualification = qualification;
+    }
+    
+    
     
     
     

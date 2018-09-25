@@ -32,13 +32,13 @@ public class ReviewResource {
     }
     
     @RequestMapping(value = "/tutor/{id}",method = RequestMethod.GET)
-    public List<Review> getByTutor(@PathVariable("tutorId") Long tutorId) {
-        return reviewRepo.getByTutor(tutorId);
+    public List<Review> getByTutor(@PathVariable("id") Long id) {
+        return reviewRepo.getByTutor(id);
     }
     
     @RequestMapping(value = "/student/{id}",method = RequestMethod.GET)
-    public List<Review> getByStudent(@PathVariable("studentId") Long studentId) {
-        return reviewRepo.getByStudent(studentId);
+    public List<Review> getByStudent(@PathVariable("id") Long id) {
+        return reviewRepo.getByStudent(id);
     }
     
 }

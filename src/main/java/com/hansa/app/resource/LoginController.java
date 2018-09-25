@@ -35,8 +35,7 @@ public class LoginController {
     
     @RequestMapping(method=RequestMethod.POST)
     public User login(@RequestBody User user) {
-        
-        User foundUser = userRepo.get(user.getUserId());
+        User foundUser = userRepo.get(user.getUserId(), user.getPassword());
         if(foundUser==null) throw new RuntimeException("User not found.");
         if(foundUser.getType().equals("STUDENT")) {
             foundUser.setDetail(studentRepo.getById(foundUser.getRefId()));
@@ -44,6 +43,14 @@ public class LoginController {
             foundUser.setDetail(tutorRepo.getById(foundUser.getRefId()));
         }
         return foundUser;
+    }
+    
+    @RequestMapping(method=RequestMethod.PUT)
+    public User changePassword(@RequestBody User user) {
+        User foundUser = userRepo.getOne(user.getId());
+        if(foundUser==null) throw new RuntimeException("User not found.");
+        foundUser.setPassword(user.getPassword());
+        return userRepo.save(foundUser);
     }
     
 }

@@ -10,11 +10,13 @@ import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.data.Tutor;
 import com.hansa.app.data.User;
 import com.hansa.app.model.PagedResponse;
+import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +38,9 @@ public class TeacherResource {
     @Autowired
     private UserRepo userRepo;
     
+    @Autowired
+    private ReviewRepo reviewRepo;
+    
     
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(method = {RequestMethod.GET})
@@ -52,6 +57,14 @@ public class TeacherResource {
         pagedTutor.setTotalSize(pages.getTotalElements());
         pagedTutor.setContents(pages.getContent());
         return pagedTutor;
+    }
+    
+    
+    @RequestMapping("/{id}")
+    public Tutor get(@PathVariable("id") Long id) {
+        Tutor tutor = tutorRepo.getById(id);
+        tutor.setReviews(reviewRepo.getByTutor(id));
+        return tutor;
     }
     
     @CrossOrigin(origins = "http://localhost:4200")

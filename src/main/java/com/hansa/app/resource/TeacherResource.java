@@ -47,6 +47,7 @@ public class TeacherResource {
         Page<Tutor> pages =  tutorRepo.findAll(pageRequest);
         PagedResponse pagedTutor = new PagedResponse();
         pagedTutor.setNext(pages.hasNext());
+        pagedTutor.setPage(pages.getNumber());
         pagedTutor.setSize(pages.getTotalPages());
         pagedTutor.setTotalSize(pages.getTotalElements());
         pagedTutor.setContents(pages.getContent());

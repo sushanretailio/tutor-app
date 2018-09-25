@@ -9,9 +9,11 @@ package com.hansa.app.resource;
 import com.hansa.app.repo.StudentRepo;
 import com.hansa.app.data.Student;
 import com.hansa.app.data.User;
+import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,10 +34,22 @@ public class StudentResource {
     @Autowired
     private UserRepo userRepo;
     
+    @Autowired
+    private ReviewRepo reviewRepo;
+    
+    
     @CrossOrigin(origins = "*")
     @RequestMapping(method = {RequestMethod.GET})
     public Iterable<Student> getTutors() {
         return studentRepo.findAll();
+    }
+    
+    @RequestMapping("/{id}")
+    public Student get(@PathVariable("id") Long id) {
+        Student std = studentRepo.getById(id);
+        std.setReviews(reviewRepo.getByStudent(id));
+        std.getReviews().forEach(it-> it.setStudent(null));
+        return std;
     }
     
     @CrossOrigin(origins = "*")

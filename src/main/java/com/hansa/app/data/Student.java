@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -33,6 +34,10 @@ public class Student {
     private String classcategory;
     private String particularClass;
     private String subjects;
+    
+    @Transient
+    private List<Review> reviews;
+    
 
     public long getId() {
         return id;
@@ -104,6 +109,14 @@ public class Student {
 
     public void setSubjects(String subjects) {
         this.subjects = subjects;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
     
     

@@ -64,6 +64,7 @@ public class TeacherResource {
     public Tutor get(@PathVariable("id") Long id) {
         Tutor tutor = tutorRepo.getById(id);
         tutor.setReviews(reviewRepo.getByTutor(id));
+        tutor.getReviews().forEach(it-> it.setTutor(null));
         return tutor;
     }
     

@@ -5,7 +5,6 @@
  */
 package com.hansa.app.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +27,7 @@ public class Review implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @JsonIgnore
+    
     @OneToOne(fetch = FetchType.LAZY)
     private Tutor tutor;
     @OneToOne(fetch = FetchType.EAGER)

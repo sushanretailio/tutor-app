@@ -6,6 +6,7 @@
 package com.hansa.app.resource;
 
 import com.hansa.app.data.User;
+import com.hansa.app.error.RequestException;
 import com.hansa.app.repo.StudentRepo;
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.repo.UserRepo;
@@ -38,7 +39,7 @@ public class LoginController {
     @RequestMapping(method=RequestMethod.POST)
     public User login(@RequestBody User user) {
         User foundUser = userRepo.get(user.getUserId(), user.getPassword());
-        if(foundUser==null) throw new RuntimeException("User not found.");
+        if(foundUser==null) throw new RequestException("User not found.");
         if(foundUser.getType().equals("STUDENT")) {
             foundUser.setDetail(studentRepo.getById(foundUser.getRefId()));
         } else {

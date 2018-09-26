@@ -8,11 +8,16 @@ package com.hansa.app.resource;
 import com.hansa.app.data.Job;
 import com.hansa.app.data.JobApplication;
 import com.hansa.app.data.JobStatus;
+import com.hansa.app.data.Tutor;
+import com.hansa.app.error.RequestException;
+import com.hansa.app.model.PagedResponse;
 import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.JobRepo;
 import com.hansa.app.repo.TutorRepo;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,16 +56,20 @@ public class JobResource {
     public JobApplication apply(@PathVariable("id") Long id, @RequestParam("tutorId") Long tutorId) {
         Job job = jobRepo.getOne(id);
         if(job.getStatus().equals("CLOSED") || job.getStatus().equals("CANCELLED")) {
-            throw new RuntimeException("Job is closed.");
+            throw new RequestException("Job is closed.");
         }
         int count = applicationRepo.getApplicationCount(id);
         if(count>=10) {
-            throw new RuntimeException("Job application limit exceeded.");
+            throw new RequestException("Job application limit exceeded.");
         }
         JobApplication app = new JobApplication();
         app.setJob(job);
         app.setStatus("APPLIED");
         app.setUpdatedOn(LocalDateTime.now());
+        Tutor tutor = tutorRepo.getById(tutorId);
+        if(tutor==null) {
+            throw new RequestException("Tutor not found "+tutorId);
+        }
         app.setTutor(tutorRepo.getById(tutorId));
         return applicationRepo.save(app);
     }
@@ -71,5 +80,19 @@ public class JobResource {
         Job job = jobRepo.getOne(id);
         job.setStatus(status);
         return jobRepo.save(job);
+    }
+    
+    @RequestMapping(method = RequestMethod.GET)
+    public PagedResponse getJobs(@RequestParam(name = "page",required = false) Integer page,@RequestParam(name="size",required = false) Integer size ) {
+        if(page==null) page=0;
+        if(size==null) size=10;
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Job> jobs = jobRepo.findAll(pageRequest);
+        PagedResponse resp = new PagedResponse();
+        resp.setContents(jobs.getContent());
+        resp.setNext(jobs.hasNext());
+        resp.setPage(jobs.getTotalPages());
+        resp.setTotalSize(jobs.getTotalElements());
+        return resp;
     }
 }

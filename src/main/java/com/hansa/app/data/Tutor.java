@@ -36,6 +36,10 @@ public class Tutor {
     private String experience;
     private String qualification;
     
+    private String imageUrl;
+    
+    private String gender;
+    
     @Transient
     private List<Review> reviews;
     
@@ -136,6 +140,23 @@ public class Tutor {
         this.reviews = reviews;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+    
+    
     
     
 }

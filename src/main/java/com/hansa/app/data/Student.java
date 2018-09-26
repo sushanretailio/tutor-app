@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -34,6 +33,8 @@ public class Student {
     private String classcategory;
     private String particularClass;
     private String subjects;
+    private String gender;
+    
     
     @Transient
     private List<Review> reviews;
@@ -118,6 +119,12 @@ public class Student {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+    
+    
     
     
     

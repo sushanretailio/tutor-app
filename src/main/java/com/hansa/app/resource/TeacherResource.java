@@ -12,6 +12,9 @@ import com.hansa.app.data.User;
 import com.hansa.app.model.PagedResponse;
 import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -41,6 +45,19 @@ public class TeacherResource {
     @Autowired
     private ReviewRepo reviewRepo;
     
+    
+    @RequestMapping(value = "/{id}/upload", method = RequestMethod.POST)
+    public Boolean uploadPhoto(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            File photo = File.createTempFile("tutor_"+id,".png");
+            file.transferTo(photo);
+            System.out.println("File path "+photo.getAbsolutePath());
+            return true;
+        } catch(IOException | IllegalStateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
     
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(method = {RequestMethod.GET})
@@ -64,6 +81,16 @@ public class TeacherResource {
     public Tutor get(@PathVariable("id") Long id) {
         Tutor tutor = tutorRepo.getById(id);
         tutor.setReviews(reviewRepo.getByTutor(id));
+        
+        try {
+            File photo = File.createTempFile("tutor_"+id, ".png");
+            if(photo.exists()) {
+                tutor.setImageUrl(photo.getCanonicalFile().getCanonicalPath());
+            }
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        
         tutor.getReviews().forEach(it-> it.setTutor(null));
         return tutor;
     }

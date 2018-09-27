@@ -13,6 +13,7 @@
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/ReviewResource.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/User.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Student.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Gender.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/AppointmentRepo.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/model/StudentAppointment.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/interceptor/AppInterceptor.java
@@ -27,6 +28,7 @@
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/JobRepo.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/JobResource.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Job.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/service/S3Service.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/TutorRepo.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/filter/AppFilter.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/StudentResource.java

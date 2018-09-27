@@ -7,6 +7,7 @@ package com.hansa.app.data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -36,11 +38,15 @@ public class Job implements Serializable {
     private LocalDateTime createdOn;
     @Enumerated(EnumType.STRING)
     private JobStatus status ;
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     private String className;
     private String subject;
     private String location;
     private String city;
+    
+    @Transient
+    private List<JobApplication> applications;
 
     public Long getId() {
         return id;
@@ -74,11 +80,11 @@ public class Job implements Serializable {
         this.status = status;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -113,5 +119,15 @@ public class Job implements Serializable {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public List<JobApplication> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(List<JobApplication> applications) {
+        this.applications = applications;
+    }
+    
+    
     
 }

@@ -16,6 +16,7 @@ import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.JobRepo;
 import com.hansa.app.repo.TutorRepo;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -85,6 +86,17 @@ public class JobResource {
         Job job = jobRepo.getOne(id);
         job.setStatus(status);
         return jobRepo.save(job);
+    }
+    
+    
+    @RequestMapping("/{id}")
+    public Job get(@PathVariable("id") Long id) {
+        Job job = jobRepo.get(id);
+        List<JobApplication> applicatios= applicationRepo.getByJobId(id);
+        //applicatios.forEach(it-> it.setJob(null));
+        job.setApplications(applicatios);
+        return job;
+        
     }
     
     @RequestMapping(method = RequestMethod.GET)

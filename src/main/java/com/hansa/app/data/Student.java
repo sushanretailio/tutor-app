@@ -7,6 +7,8 @@ package com.hansa.app.data;
 
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +35,8 @@ public class Student {
     private String classcategory;
     private String particularClass;
     private String subjects;
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     
     
     @Transient
@@ -120,8 +123,12 @@ public class Student {
         this.reviews = reviews;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
     
     

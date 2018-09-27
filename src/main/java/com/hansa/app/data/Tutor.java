@@ -5,8 +5,11 @@
  */
 package com.hansa.app.data;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +23,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tutor")
-public class Tutor {
+public class Tutor implements Serializable {
 
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,10 +38,12 @@ public class Tutor {
     private String subjects;
     private String experience;
     private String qualification;
-    
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    @Transient
     private String imageUrl;
     
-    private String gender;
+    
     
     @Transient
     private List<Review> reviews;
@@ -148,11 +153,11 @@ public class Tutor {
         this.imageUrl = imageUrl;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
     

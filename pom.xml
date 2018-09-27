@@ -23,6 +23,14 @@
             <artifactId>mail</artifactId>
             <version>1.4</version>
         </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-java-sdk-s3</artifactId>
+    <version>1.11.416</version>
+</dependency>
+
 
         <dependency>
             <groupId>org.apache.commons</groupId>

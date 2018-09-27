@@ -13,6 +13,7 @@ import com.hansa.app.error.RequestException;
 import com.hansa.app.model.PagedResponse;
 import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
+import com.hansa.app.service.S3Service;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -46,13 +47,16 @@ public class TeacherResource {
     @Autowired
     private ReviewRepo reviewRepo;
     
+    @Autowired
+    private S3Service s3Service;
+    
     
     @RequestMapping(value = "/{id}/upload", method = RequestMethod.POST)
     public Boolean uploadPhoto(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
         try {
-            File photo = File.createTempFile("tutor_"+id,".png");
-            file.transferTo(photo);
-            System.out.println("File path "+photo.getAbsolutePath());
+            byte[] bytes = file.getBytes();
+            String url = s3Service.save(bytes, "png", "tutor_"+id);
+            System.out.println("Url "+url);
             return true;
         } catch(IOException | IllegalStateException ex) {
             ex.printStackTrace();
@@ -99,7 +103,7 @@ public class TeacherResource {
         return tutor;
     }
     
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*ss")
     @RequestMapping(method = {RequestMethod.POST})
     public User save(@RequestBody Tutor tutor) {
         if(tutor.getMobile()==null || tutor.getMobile().isEmpty()) {

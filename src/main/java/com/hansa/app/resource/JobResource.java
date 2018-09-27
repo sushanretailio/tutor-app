@@ -9,6 +9,7 @@ import com.hansa.app.data.Job;
 import com.hansa.app.data.JobApplication;
 import com.hansa.app.data.JobStatus;
 import com.hansa.app.data.Tutor;
+import com.hansa.app.data.UserRole;
 import com.hansa.app.error.RequestException;
 import com.hansa.app.model.PagedResponse;
 import com.hansa.app.repo.JobApplicationRepo;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,7 +57,7 @@ public class JobResource {
     @RequestMapping(value ="/{id}/apply" ,method = RequestMethod.PUT)
     public JobApplication apply(@PathVariable("id") Long id, @RequestParam("tutorId") Long tutorId) {
         Job job = jobRepo.getOne(id);
-        if(job.getStatus().equals("CLOSED") || job.getStatus().equals("CANCELLED")) {
+        if(job.getStatus()== JobStatus.CANCELLED || job.getStatus()==JobStatus.CLOSED) {
             throw new RequestException("Job is closed.");
         }
         int count = applicationRepo.getApplicationCount(id);
@@ -76,7 +78,10 @@ public class JobResource {
     
     @CrossOrigin(origins = "*")
     @RequestMapping(value ="/{id}status" ,method = RequestMethod.PUT)
-    public Job updateStatus(@PathVariable("id") Long id, @RequestParam("status") JobStatus status) {
+    public Job updateStatus(@RequestHeader(name = "userId", required = false) Long userId, @RequestHeader("role") UserRole role,@PathVariable("id") Long id, @RequestParam("status") JobStatus status) {
+        if(role==UserRole.ANONIMOUS || userId==null) {
+            throw new RequestException("User not logged in");
+        }
         Job job = jobRepo.getOne(id);
         job.setStatus(status);
         return jobRepo.save(job);

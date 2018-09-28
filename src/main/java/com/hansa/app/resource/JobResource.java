@@ -65,6 +65,13 @@ public class JobResource {
         if(count>=10) {
             throw new RequestException("Job application limit exceeded.");
         }
+        
+        JobApplication application=  applicationRepo.getByJobId(id, tutorId);
+        if(application!=null) {
+            throw new RequestException("Tutor already applied for this job "+tutorId);
+        }
+        
+        
         JobApplication app = new JobApplication();
         app.setJob(job);
         app.setStatus("APPLIED");
@@ -93,7 +100,6 @@ public class JobResource {
     public Job get(@PathVariable("id") Long id) {
         Job job = jobRepo.get(id);
         List<JobApplication> applicatios= applicationRepo.getByJobId(id);
-        //applicatios.forEach(it-> it.setJob(null));
         job.setApplications(applicatios);
         return job;
         

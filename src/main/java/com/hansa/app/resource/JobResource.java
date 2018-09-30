@@ -15,6 +15,7 @@ import com.hansa.app.model.PagedResponse;
 import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.JobRepo;
 import com.hansa.app.repo.TutorRepo;
+import com.hansa.app.service.TutorService;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/job")
 public class JobResource {
     
+    
+    final int APPLY_CHARGE=50;
+    
     @Autowired
     private JobRepo jobRepo;
     
@@ -46,6 +50,9 @@ public class JobResource {
     
     @Autowired
     private TutorRepo tutorRepo;
+    
+    @Autowired
+    private TutorService tutorService;
     
     @RequestMapping(method = RequestMethod.POST)
     public Job post(@RequestBody Job job) {
@@ -71,12 +78,18 @@ public class JobResource {
             throw new RequestException("Tutor already applied for this job "+tutorId);
         }
         
+        Tutor tutor = tutorRepo.getById(tutorId);
+        if(tutor.getCredit()<APPLY_CHARGE) {
+            throw new RequestException("Insufficient Credit "+tutorId);
+        }
+        tutor.setCredit(tutor.getCredit()-APPLY_CHARGE);
+        tutorRepo.save(tutor);
+        
         
         JobApplication app = new JobApplication();
         app.setJob(job);
         app.setStatus("APPLIED");
         app.setUpdatedOn(LocalDateTime.now());
-        Tutor tutor = tutorRepo.getById(tutorId);
         if(tutor==null) {
             throw new RequestException("Tutor not found "+tutorId);
         }

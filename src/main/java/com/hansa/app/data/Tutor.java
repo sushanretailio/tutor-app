@@ -40,6 +40,9 @@ public class Tutor implements Serializable {
     private String qualification;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    
+    
+    private int credit;
     @Transient
     private String imageUrl;
     
@@ -159,6 +162,14 @@ public class Tutor implements Serializable {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public int getCredit() {
+        return credit;
+    }
+
+    public void setCredit(int credit) {
+        this.credit = credit;
     }
     
     

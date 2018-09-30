@@ -14,9 +14,9 @@ import com.hansa.app.model.PagedResponse;
 import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
 import com.hansa.app.service.S3Service;
+import com.hansa.app.service.TutorService;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,6 +50,9 @@ public class TeacherResource {
     @Autowired
     private S3Service s3Service;
     
+    @Autowired
+    private TutorService service;
+    
     
     @RequestMapping(value = "/{id}/upload", method = RequestMethod.POST)
     public Boolean uploadPhoto(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
@@ -79,6 +82,12 @@ public class TeacherResource {
         pagedTutor.setTotalSize(pages.getTotalElements());
         pagedTutor.setContents(pages.getContent());
         return pagedTutor;
+    }
+    
+    
+    public Tutor updateCredit(@PathVariable("id") Long id , int credit) {
+        
+        return service.updateCredit(id, credit);
     }
     
     

@@ -35,12 +35,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author sushant
  */
 
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET,RequestMethod.PATCH,RequestMethod.POST,RequestMethod.PUT})
 @RestController
 @RequestMapping("/job")
 public class JobResource {
     
     
-    final int APPLY_CHARGE=50;
+    
     
     @Autowired
     private JobRepo jobRepo;
@@ -61,7 +62,6 @@ public class JobResource {
         return jobRepo.save(job);
     }
     
-    @CrossOrigin(origins = "*")
     @RequestMapping(value ="/{id}/apply" ,method = RequestMethod.PUT)
     public JobApplication apply(@PathVariable("id") Long id, @RequestParam("tutorId") Long tutorId) {
         Job job = jobRepo.getOne(id);
@@ -73,31 +73,24 @@ public class JobResource {
             throw new RequestException("Job application limit exceeded.");
         }
         
-        JobApplication application=  applicationRepo.getByJobId(id, tutorId);
+        JobApplication application=  applicationRepo.getByTutorId(id, tutorId);
         if(application!=null) {
             throw new RequestException("Tutor already applied for this job "+tutorId);
         }
         
-        Tutor tutor = tutorRepo.getById(tutorId);
-        if(tutor.getCredit()<APPLY_CHARGE) {
-            throw new RequestException("Insufficient Credit "+tutorId);
-        }
-        tutor.setCredit(tutor.getCredit()-APPLY_CHARGE);
-        tutorRepo.save(tutor);
         
         
         JobApplication app = new JobApplication();
         app.setJob(job);
         app.setStatus("APPLIED");
         app.setUpdatedOn(LocalDateTime.now());
-        if(tutor==null) {
-            throw new RequestException("Tutor not found "+tutorId);
-        }
+        Tutor tutor = tutorService.apply(tutorId);
+        
         app.setTutor(tutorRepo.getById(tutorId));
         return applicationRepo.save(app);
     }
     
-    @CrossOrigin(origins = "*")
+    
     @RequestMapping(value ="/{id}status" ,method = RequestMethod.PUT)
     public Job updateStatus(@RequestHeader(name = "userId", required = false) Long userId, @RequestHeader("role") UserRole role,@PathVariable("id") Long id, @RequestParam("status") JobStatus status) {
         if(role==UserRole.ANONIMOUS || userId==null) {
@@ -118,6 +111,26 @@ public class JobResource {
         
     }
     
+    @RequestMapping(path = "/student/{id}",method = RequestMethod.GET)
+    public PagedResponse getJobs(@PathVariable("id") Long studentId,  @RequestParam(name = "page",required = false) Integer page,@RequestParam(name="size",required = false) Integer size ) {
+        if(page==null) page=0;
+        if(size==null) size=10;
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Job> jobs = jobRepo.get(studentId,pageRequest);
+        List<Job> data = jobs.getContent();
+        data.forEach(it-> it.setStudent(null));
+        data.forEach(it-> it.getApplications().forEach(a-> a.setJob(null)));
+        
+        
+        PagedResponse resp = new PagedResponse();
+        resp.setContents(data);
+        resp.setNext(jobs.hasNext());
+        resp.setPage(jobs.getTotalPages());
+        resp.setTotalSize(jobs.getTotalElements());
+        return resp;
+    }
+    
+    
     @RequestMapping(method = RequestMethod.GET)
     public PagedResponse getJobs(@RequestParam(name = "page",required = false) Integer page,@RequestParam(name="size",required = false) Integer size ) {
         if(page==null) page=0;
@@ -125,6 +138,7 @@ public class JobResource {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Job> jobs = jobRepo.findAll(pageRequest);
         PagedResponse resp = new PagedResponse();
+        
         resp.setContents(jobs.getContent());
         resp.setNext(jobs.hasNext());
         resp.setPage(jobs.getTotalPages());

@@ -28,7 +28,7 @@ public class Review implements Serializable {
     private Long id;
     
     
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private Tutor tutor;
     @OneToOne(fetch = FetchType.EAGER)
     private Student student;

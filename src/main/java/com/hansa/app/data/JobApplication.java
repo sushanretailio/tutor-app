@@ -5,7 +5,6 @@
  */
 package com.hansa.app.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -30,7 +29,7 @@ public class JobApplication implements Serializable {
     private Long id;
     @OneToOne(fetch = FetchType.EAGER)
     private Tutor tutor;
-    @JsonIgnore
+    //@JsonIgnore
     @OneToOne(fetch = FetchType.EAGER)
     private Job job;
     @Column(name = "updated_on")

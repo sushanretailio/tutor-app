@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author sushant Kumar
  */
 
+@CrossOrigin(origins = "*")
 @RestController
 public class AppointmentResource {
     
@@ -41,19 +42,19 @@ public class AppointmentResource {
     @Autowired
     private StudentRepo  studentRepo;
     
-    @CrossOrigin(origins = "*")
+    
     @RequestMapping(path = "/appointment/student/{id}", method = {RequestMethod.GET})
     public Iterable<Appointment> appointForStudent(@PathVariable("id") Long id) {
         return appointmentRepo.getByStudent(id);
     }
     
-    @CrossOrigin(origins = "*")
+    
     @RequestMapping(path = "/appointment/tutor/{id}", method = {RequestMethod.GET})
     public Iterable<Appointment> appointForTutor(@PathVariable("id") Long id) {
         return appointmentRepo.getByTutor(id);
     }
     
-    @CrossOrigin(origins = "*")
+    
     @RequestMapping(path = "/appointment/{id}", method = {RequestMethod.PUT})
     public Appointment update(@PathVariable("id") Long id, @RequestParam("status") String status) {
         
@@ -66,7 +67,7 @@ public class AppointmentResource {
     }
     
     
-    @CrossOrigin(origins = "*")
+    
     @RequestMapping(path = "/appointment", method = {RequestMethod.POST})
     public Appointment save(@RequestBody Appointment appointment) {
         appointment.setStatus("CREATED");

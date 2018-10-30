@@ -7,6 +7,8 @@ package com.hansa.app.repo;
 
 import com.hansa.app.data.JobApplication;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,6 +26,10 @@ public interface JobApplicationRepo extends JpaRepository<JobApplication, Long> 
     List<JobApplication> getByJobId(@Param("jobId") Long jobId);
     
     @Query("select a from JobApplication a where a.job.id =:jobId and a.tutor.id =:tutorId")
-    JobApplication getByJobId(@Param("jobId") Long jobId, @Param("tutorId") Long tutorId);
+    JobApplication getByTutorId(@Param("jobId") Long jobId, @Param("tutorId") Long tutorId);
+    
+    @Query("select a from JobApplication a where a.tutor.id =:tutorId")
+    Page<JobApplication> getAllByTutorId(@Param("tutorId") Long tutorId,Pageable page);
+    
     
 }

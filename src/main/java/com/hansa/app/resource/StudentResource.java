@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author sushant Kumar
  */
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/student")
 public class StudentResource {
@@ -38,7 +39,7 @@ public class StudentResource {
     private ReviewRepo reviewRepo;
     
     
-    @CrossOrigin(origins = "*")
+    
     @RequestMapping(method = {RequestMethod.GET})
     public Iterable<Student> getTutors() {
         return studentRepo.findAll();
@@ -48,11 +49,13 @@ public class StudentResource {
     public Student get(@PathVariable("id") Long id) {
         Student std = studentRepo.getById(id);
         std.setReviews(reviewRepo.getByStudent(id));
-        std.getReviews().forEach(it-> it.setStudent(null));
+        Student empty = new Student();
+        empty.setName(std.getName());
+        std.getReviews().forEach(it-> it.setStudent(empty));
         return std;
     }
     
-    @CrossOrigin(origins = "*")
+    
     @RequestMapping(method = {RequestMethod.POST})
     public User save(@RequestBody Student student) {
         if(student.getMobile()==null || student.getMobile().isEmpty()) {

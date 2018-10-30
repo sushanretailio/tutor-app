@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author sushant
  */
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/login")
 public class LoginController {
@@ -35,7 +36,7 @@ public class LoginController {
     @Autowired
     private TutorRepo tutorRepo;
     
-    @CrossOrigin(origins = "*")
+    
     @RequestMapping(method=RequestMethod.POST)
     public User login(@RequestBody User user) {
         User foundUser = userRepo.get(user.getUserId(), user.getPassword());

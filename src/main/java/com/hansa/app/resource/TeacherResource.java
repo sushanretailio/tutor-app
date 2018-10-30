@@ -11,6 +11,7 @@ import com.hansa.app.data.Tutor;
 import com.hansa.app.data.User;
 import com.hansa.app.error.RequestException;
 import com.hansa.app.model.PagedResponse;
+import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
 import com.hansa.app.service.S3Service;
@@ -34,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author sushant
  */
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/tutor")
 public class TeacherResource {
@@ -53,6 +55,9 @@ public class TeacherResource {
     @Autowired
     private TutorService service;
     
+    @Autowired
+    private JobApplicationRepo applicationRepo;
+    
     
     @RequestMapping(value = "/{id}/upload", method = RequestMethod.POST)
     public Boolean uploadPhoto(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
@@ -67,7 +72,7 @@ public class TeacherResource {
         }
     }
     
-    @CrossOrigin(origins = "*")
+    
     @RequestMapping(method = {RequestMethod.GET})
     public PagedResponse getTutors(@RequestParam(name="page", required=false) Integer page,@RequestParam(name="size", required = false) Integer size) {
         if(page==null) page=0;
@@ -99,20 +104,16 @@ public class TeacherResource {
         }
         tutor.setReviews(reviewRepo.getByTutor(id));
         
-        try {
-            File photo = File.createTempFile("tutor_"+id, ".png");
-            if(photo.exists()) {
-                tutor.setImageUrl(photo.getCanonicalFile().getCanonicalPath());
-            }
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
-        
+        String url = s3Service.get("tutor_"+tutor.getId(), "png");
+        tutor.setImageUrl(url);
         tutor.getReviews().forEach(it-> it.setTutor(null));
+        
+        
+        
         return tutor;
     }
     
-    @CrossOrigin(origins = "*ss")
+    
     @RequestMapping(method = {RequestMethod.POST})
     public User save(@RequestBody Tutor tutor) {
         if(tutor.getMobile()==null || tutor.getMobile().isEmpty()) {

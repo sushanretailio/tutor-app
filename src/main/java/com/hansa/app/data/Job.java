@@ -16,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -45,7 +46,13 @@ public class Job implements Serializable {
     private String location;
     private String city;
     
-    @Transient
+    //@Transient
+    
+    @OneToMany(
+                       fetch = FetchType.EAGER,
+                       mappedBy = "job",
+                       orphanRemoval = true
+                   )
     private List<JobApplication> applications;
 
     public Long getId() {

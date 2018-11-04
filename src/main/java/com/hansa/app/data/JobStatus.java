@@ -10,6 +10,6 @@ package com.hansa.app.data;
  * @author sushant
  */
 public enum JobStatus {
-    OPEN,IN_PROGRESS,CANCELLED,CLOSED
+    OPEN,IN_PROGRESS,CANCELLED,CLOSED,DEMO_SCHEDULED,DONE
     
 }

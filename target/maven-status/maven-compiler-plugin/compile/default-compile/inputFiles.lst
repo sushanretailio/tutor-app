@@ -1,3 +1,4 @@
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/service/TutorService.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/AppointmentResource.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Review.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/JobApplication.java
@@ -5,6 +6,7 @@
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/model/TeacherAppointment.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/UserRepository.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/model/PagedResponse.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/JobApplicationResource.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/UserRepo.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/TeacherResource.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/error/ErrorHandler.java
@@ -19,10 +21,12 @@
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/interceptor/AppInterceptor.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/error/ErrorResponse.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Appointment.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/proxy/TestProxy.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Tutor.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/UserRole.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/JobStatus.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/error/RequestException.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/Test.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/LoginController.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/JobApplicationRepo.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/JobRepo.java

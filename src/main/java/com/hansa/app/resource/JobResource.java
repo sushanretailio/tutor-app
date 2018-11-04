@@ -63,7 +63,7 @@ public class JobResource {
     }
     
     @RequestMapping(value ="/{id}/apply" ,method = RequestMethod.PUT)
-    public JobApplication apply(@PathVariable("id") Long id, @RequestParam("tutorId") Long tutorId) {
+    public Long apply(@PathVariable("id") Long id, @RequestParam("tutorId") Long tutorId) {
         Job job = jobRepo.getOne(id);
         if(job.getStatus()== JobStatus.CANCELLED || job.getStatus()==JobStatus.CLOSED) {
             throw new RequestException("Job is closed.");
@@ -78,20 +78,23 @@ public class JobResource {
             throw new RequestException("Tutor already applied for this job "+tutorId);
         }
         
-        
-        
         JobApplication app = new JobApplication();
         app.setJob(job);
         app.setStatus("APPLIED");
         app.setUpdatedOn(LocalDateTime.now());
         Tutor tutor = tutorService.apply(tutorId);
+        if(tutor.getCredit()<50) {
+            throw new RequestException("Insufficient Credit, available "+tutor.getCredit());
+        }
+        tutor.setCredit(tutor.getCredit()-50);
+        tutorRepo.save(tutor);
         
-        app.setTutor(tutorRepo.getById(tutorId));
-        return applicationRepo.save(app);
+        app.setTutor(tutor);
+        return applicationRepo.save(app).getId();
     }
     
     
-    @RequestMapping(value ="/{id}status" ,method = RequestMethod.PUT)
+    @RequestMapping(value ="/{id}/status" ,method = RequestMethod.PUT)
     public Job updateStatus(@RequestHeader(name = "userId", required = false) Long userId, @RequestHeader("role") UserRole role,@PathVariable("id") Long id, @RequestParam("status") JobStatus status) {
         if(role==UserRole.ANONIMOUS || userId==null) {
             throw new RequestException("User not logged in");
@@ -137,6 +140,7 @@ public class JobResource {
         if(size==null) size=10;
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Job> jobs = jobRepo.findAll(pageRequest);
+        jobs.forEach(it-> it.setApplications(null));
         PagedResponse resp = new PagedResponse();
         
         resp.setContents(jobs.getContent());

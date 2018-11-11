@@ -14,14 +14,15 @@ import com.hansa.app.model.PagedResponse;
 import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
+import com.hansa.app.service.MailUtil;
 import com.hansa.app.service.S3Service;
 import com.hansa.app.service.TutorService;
-import java.io.File;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +58,9 @@ public class TeacherResource {
     
     @Autowired
     private JobApplicationRepo applicationRepo;
+    
+    @Autowired
+    private MailUtil mailUtil;
     
     
     @RequestMapping(value = "/{id}/upload", method = RequestMethod.POST)
@@ -119,6 +123,8 @@ public class TeacherResource {
         if(tutor.getMobile()==null || tutor.getMobile().isEmpty()) {
             throw new RequestException("Mobile number cant be empty");
         }
+        
+        tutor.setCredit(500);
         Tutor updated= tutorRepo.save(tutor);
         User user = new User();
         user.setRefId(updated.getId());
@@ -127,7 +133,15 @@ public class TeacherResource {
         user.setPassword(tutor.getMobile());
         userRepo.save(user);
         user.setDetail(updated);
+        mailUtil.tutorRegister(updated);
         return user;
+    }
+    
+    
+    @GetMapping("/mail")
+    public void testMailTutor(@RequestParam("email") Long tutorid) {
+        Tutor t = tutorRepo.getById(tutorid);
+        mailUtil.tutorRegister(t);
     }
     
     

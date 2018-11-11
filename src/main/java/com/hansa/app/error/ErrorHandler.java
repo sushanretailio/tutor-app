@@ -20,13 +20,15 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     
      @ExceptionHandler(value = {RuntimeException.class,RequestException.class})
      public ResponseEntity<Object> handle(Exception ex) {
-         ex.printStackTrace();
+        // ex.printStackTrace();
         return handleExceptions(ex);
     }
    
     private ResponseEntity<Object> handleExceptions(Throwable ex) {
         if (ex instanceof RequestException) {
             return new ResponseEntity(new ErrorResponse("Request processing failed", ex.getMessage()), HttpStatus.BAD_REQUEST);
+        } else if (ex instanceof UnAuthoriseException) {
+            return new ResponseEntity(new ErrorResponse("Request processing failed", ex.getMessage()), HttpStatus.UNAUTHORIZED);
         }
         return error();
         

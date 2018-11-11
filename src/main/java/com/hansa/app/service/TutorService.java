@@ -5,9 +5,13 @@
  */
 package com.hansa.app.service;
 
+import com.hansa.app.data.Gender;
 import com.hansa.app.data.Tutor;
 import com.hansa.app.error.RequestException;
+import com.hansa.app.model.TutorCredit;
 import com.hansa.app.repo.TutorRepo;
+import java.util.List;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +30,13 @@ public class TutorService {
     
     
     
+    @Transactional
+    public void updateCredit(List<TutorCredit> llist) {
+        for(TutorCredit tc : llist) {
+            tutorRepo.updateCredit(tc.getTutorId(), tc.getCredit());
+        }
+    }
+    
     public Tutor apply(Long tutorId) {
         Tutor tutor = tutorRepo.getById(tutorId);
         if(tutor==null) {
@@ -36,6 +47,11 @@ public class TutorService {
         }
         tutor.setCredit(tutor.getCredit()-APPLY_CHARGE);
         return tutorRepo.save(tutor);
+    }
+    
+    
+    public List<Tutor> findAll(String subject, Gender gender) {
+        return tutorRepo.find();
     }
     
     public Tutor updateCredit(Long tutorId, int credit) {

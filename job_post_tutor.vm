@@ -1,0 +1,12 @@
+
+<html>
+<body>
+Hello $name! 
+You have successfully posted your requirement for tutor. 
+
+Student Name : $stdName , Class $stdCls , Subject : $subject .
+We will keep informing you when any tutor applies for this job.
+
+</body>
+</html>
+

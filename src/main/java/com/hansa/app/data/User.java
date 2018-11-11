@@ -74,6 +74,17 @@ public class User implements Serializable {
         this.refId = refId;
     }
     
+    @Transient
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+    
     
 
 }

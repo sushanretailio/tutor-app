@@ -5,9 +5,11 @@
  */
 package com.hansa.app.resource;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hansa.app.data.Tutor;
-import java.io.File;
+import java.io.StringWriter;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 
 /**
  *
@@ -16,7 +18,19 @@ import java.io.File;
 public class Test {
     
     public static void main(String[] args) throws Exception {
-        new ObjectMapper().readValue(new File("newjson.json"), Tutor.class);
+        Tutor tt = new Tutor();
+        VelocityEngine ve = new VelocityEngine();
+        ve.init();
+        tt.setName("Sushant");
+        tt.setEmail("sushant001@gmail.com");
+        Template t = ve.getTemplate("tutor-register.vm");
+            VelocityContext context = new VelocityContext();
+            context.put("name", tt.getName());
+            context.put("mobile", tt.getMobile());
+            context.put("password", tt.getMobile());
+            StringWriter writer = new StringWriter();
+            t.merge(context, writer);
+            System.out.println(writer.toString());
     }
     
 }

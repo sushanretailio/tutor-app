@@ -5,6 +5,7 @@
  */
 package com.hansa.app.service;
 
+import java.util.List;
 import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.mail.Message;
@@ -24,8 +25,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
     
-    private final String username = "mailer.hansaa@gmail.com";
-    private final String password = "Oct@2018";
+    private final String username = "myta377@gmail.com";
+    private final String password = "ashokjha";
 
 
     @PostConstruct
@@ -40,7 +41,7 @@ public class EmailService {
                 new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("mailer.hansaa@gmail.com", "Oct@2018");
+                return new PasswordAuthentication(username, password);
             }
         });
         log.info("Mail session started");
@@ -49,6 +50,24 @@ public class EmailService {
     private static final Log log = LogFactory.getFactory().getInstance(EmailService.class);
     private Session session;
 
+    
+    public void sendEmail(String body, String subject, List<String> toList) {
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            for(String s : toList) {
+                message.setRecipients(Message.RecipientType.BCC, s);
+            }
+            message.setSubject(subject); 
+            message.setText(body);
+            Transport.send(message);
+            log.info("Mail sent");
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+    }
     
     public void sendEmail(String body, String subject, String to) {
         log.info("Sending email to " + to + " , Subject " + subject + ", Body " + body);

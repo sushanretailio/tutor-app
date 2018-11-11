@@ -10,11 +10,15 @@ import com.hansa.app.error.RequestException;
 import com.hansa.app.repo.StudentRepo;
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.repo.UserRepo;
+import com.hansa.app.service.EmailService;
+import com.hansa.app.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -36,6 +40,9 @@ public class LoginController {
     @Autowired
     private TutorRepo tutorRepo;
     
+    @Autowired
+    private EmailService emailService;
+    
     
     @RequestMapping(method=RequestMethod.POST)
     public User login(@RequestBody User user) {
@@ -46,6 +53,8 @@ public class LoginController {
         } else {
             foundUser.setDetail(tutorRepo.getById(foundUser.getRefId()));
         }
+        String token = new JwtTokenService().getToken(foundUser);
+        foundUser.setToken(token);
         return foundUser;
     }
     
@@ -54,7 +63,15 @@ public class LoginController {
         User foundUser = userRepo.getOne(user.getId());
         if(foundUser==null) throw new RuntimeException("User not found.");
         foundUser.setPassword(user.getPassword());
+        String token = new JwtTokenService().getToken(foundUser);
+        foundUser.setToken(token);
         return userRepo.save(foundUser);
     }
+    
+    @GetMapping("/mail")
+    public void testMail(@RequestParam("email") String email,@RequestParam("subject") String subject, @RequestParam("body") String body) {
+        emailService.sendEmail(body, subject, email);
+    }
+    
     
 }

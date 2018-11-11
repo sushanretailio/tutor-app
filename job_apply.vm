@@ -1,0 +1,10 @@
+
+Hello $name! 
+You have successfully appllied for below Job. 
+
+Student Name : $stdName , Class $stdCls , Subject : $subject .
+Your total credit balance is $credit .
+
+
+Regards
+Hansaa

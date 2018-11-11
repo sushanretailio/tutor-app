@@ -5,6 +5,7 @@
  */
 package com.hansa.app.resource;
 
+import com.hansa.app.data.Gender;
 import com.hansa.app.data.Job;
 import com.hansa.app.data.JobApplication;
 import com.hansa.app.data.JobStatus;
@@ -15,6 +16,7 @@ import com.hansa.app.model.PagedResponse;
 import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.JobRepo;
 import com.hansa.app.repo.TutorRepo;
+import com.hansa.app.service.MailUtil;
 import com.hansa.app.service.TutorService;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,10 +57,15 @@ public class JobResource {
     @Autowired
     private TutorService tutorService;
     
+    @Autowired
+    private MailUtil mailUtil;
+    
     @RequestMapping(method = RequestMethod.POST)
     public Job post(@RequestBody Job job) {
         job.setStatus(JobStatus.OPEN);
         job.setCreatedOn(LocalDateTime.now());
+        List<Tutor> all = tutorService.findAll(job.getSubject(), job.getGender());
+        mailUtil.jobNotification(all, job);
         return jobRepo.save(job);
     }
     
@@ -89,19 +96,21 @@ public class JobResource {
         tutor.setCredit(tutor.getCredit()-50);
         tutorRepo.save(tutor);
         
+        mailUtil.tutorApply(tutor, job);
         app.setTutor(tutor);
         return applicationRepo.save(app).getId();
     }
     
     
     @RequestMapping(value ="/{id}/status" ,method = RequestMethod.PUT)
-    public Job updateStatus(@RequestHeader(name = "userId", required = false) Long userId, @RequestHeader("role") UserRole role,@PathVariable("id") Long id, @RequestParam("status") JobStatus status) {
+    public void updateStatus(@RequestHeader(name = "userId", required = false) Long userId, @RequestHeader("role") UserRole role,@PathVariable("id") Long id, @RequestParam("status") JobStatus status) {
         if(role==UserRole.ANONIMOUS || userId==null) {
             throw new RequestException("User not logged in");
         }
         Job job = jobRepo.getOne(id);
         job.setStatus(status);
-        return jobRepo.save(job);
+        jobRepo.save(job);
+       // return job;
     }
     
     
@@ -109,6 +118,7 @@ public class JobResource {
     public Job get(@PathVariable("id") Long id) {
         Job job = jobRepo.get(id);
         List<JobApplication> applicatios= applicationRepo.getByJobId(id);
+        applicatios.forEach(it-> it.setJob(null));
         job.setApplications(applicatios);
         return job;
         

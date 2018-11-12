@@ -6,6 +6,8 @@
 package com.hansa.app.resource;
 
 
+import com.hansa.app.data.TransType;
+import com.hansa.app.data.TransactionData;
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.data.Tutor;
 import com.hansa.app.data.User;
@@ -16,8 +18,10 @@ import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
 import com.hansa.app.service.MailUtil;
 import com.hansa.app.service.S3Service;
+import com.hansa.app.service.TransService;
 import com.hansa.app.service.TutorService;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -61,6 +65,10 @@ public class TeacherResource {
     
     @Autowired
     private MailUtil mailUtil;
+    
+    @Autowired
+    private TransService transService;
+    
     
     
     @RequestMapping(value = "/{id}/upload", method = RequestMethod.POST)
@@ -133,6 +141,14 @@ public class TeacherResource {
         user.setPassword(tutor.getMobile());
         userRepo.save(user);
         user.setDetail(updated);
+        
+        TransactionData data = new TransactionData();
+        data.setAmount(500);
+        data.setDateTime(LocalDateTime.now());
+        data.setRefId(updated.getId());
+        data.setTransType(TransType.DEBIT);
+        data.setUser(updated.getId());
+        transService.save(data);
         mailUtil.tutorRegister(updated);
         return user;
     }

@@ -9,6 +9,8 @@ import com.hansa.app.data.Gender;
 import com.hansa.app.data.Job;
 import com.hansa.app.data.JobApplication;
 import com.hansa.app.data.JobStatus;
+import com.hansa.app.data.TransType;
+import com.hansa.app.data.TransactionData;
 import com.hansa.app.data.Tutor;
 import com.hansa.app.data.UserRole;
 import com.hansa.app.error.RequestException;
@@ -17,6 +19,7 @@ import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.JobRepo;
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.service.MailUtil;
+import com.hansa.app.service.TransService;
 import com.hansa.app.service.TutorService;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -60,6 +63,9 @@ public class JobResource {
     @Autowired
     private MailUtil mailUtil;
     
+    @Autowired
+    private TransService transService;
+    
     @RequestMapping(method = RequestMethod.POST)
     public Job post(@RequestBody Job job) {
         job.setStatus(JobStatus.OPEN);
@@ -93,8 +99,14 @@ public class JobResource {
         if(tutor.getCredit()<50) {
             throw new RequestException("Insufficient Credit, available "+tutor.getCredit());
         }
-        tutor.setCredit(tutor.getCredit()-50);
-        tutorRepo.save(tutor);
+        
+        TransactionData data = new TransactionData();
+        data.setAmount(50);
+        data.setDateTime(LocalDateTime.now());
+        data.setRefId(id);
+        data.setTransType(TransType.CREDIT);
+        data.setUser(tutorId);
+        transService.save(data);
         
         mailUtil.tutorApply(tutor, job);
         app.setTutor(tutor);

@@ -20,7 +20,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     
      @ExceptionHandler(value = {RuntimeException.class,RequestException.class})
      public ResponseEntity<Object> handle(Exception ex) {
-        // ex.printStackTrace();
+         ex.printStackTrace();
         return handleExceptions(ex);
     }
    

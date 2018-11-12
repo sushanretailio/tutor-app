@@ -17,7 +17,40 @@ import org.apache.velocity.app.VelocityEngine;
  */
 public class Test {
     
-    public static void main(String[] args) throws Exception {
+    public static void testReg() throws Exception {
+        Tutor tt = new Tutor();
+        VelocityEngine ve = new VelocityEngine();
+        ve.init();
+        tt.setName("Sushant");
+        tt.setEmail("sushant001@gmail.com");
+        Template t = ve.getTemplate("tutor-register.vm");
+            VelocityContext context = new VelocityContext();
+            context.put("name", tt.getName());
+            context.put("mobile", tt.getMobile());
+            context.put("password", tt.getMobile());
+            StringWriter writer = new StringWriter();
+            t.merge(context, writer);
+            System.out.println(writer.toString());
+    }
+    
+    
+    public static void testJobPosting() throws Exception {
+        Tutor tt = new Tutor();
+        VelocityEngine ve = new VelocityEngine();
+        ve.init();
+        tt.setName("Sushant");
+        tt.setEmail("sushant001@gmail.com");
+        Template t = ve.getTemplate("tutor-register.vm");
+            VelocityContext context = new VelocityContext();
+            context.put("name", tt.getName());
+            context.put("mobile", tt.getMobile());
+            context.put("password", tt.getMobile());
+            StringWriter writer = new StringWriter();
+            t.merge(context, writer);
+            System.out.println(writer.toString());
+    }
+    
+    public static void testJobApply() throws Exception {
         Tutor tt = new Tutor();
         VelocityEngine ve = new VelocityEngine();
         ve.init();

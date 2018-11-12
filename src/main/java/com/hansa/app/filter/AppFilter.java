@@ -30,7 +30,7 @@ public class AppFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest hsr, HttpServletResponse hsr1, FilterChain fc) throws ServletException, IOException {
-        log.info("Filter");
+        log.info("Filter "+hsr.getRequestURI());
 
         /*
         String requestpath = hsr.getRequestURI();

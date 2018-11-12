@@ -8,6 +8,8 @@ package com.hansa.app.resource;
 import com.hansa.app.data.Job;
 import com.hansa.app.data.JobApplication;
 import com.hansa.app.data.JobStatus;
+import com.hansa.app.data.TransType;
+import com.hansa.app.data.TransactionData;
 import com.hansa.app.data.UserRole;
 import com.hansa.app.error.RequestException;
 import com.hansa.app.model.PagedResponse;
@@ -15,8 +17,10 @@ import com.hansa.app.model.TutorCredit;
 import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.JobRepo;
 import com.hansa.app.repo.TutorRepo;
+import com.hansa.app.service.TransService;
 import com.hansa.app.service.TutorService;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -55,6 +59,10 @@ public class AdminResource {
     @Autowired
     private TutorService tutorService;
     
+    @Autowired
+    private TransService transService;
+    
+    
     
     
     @RequestMapping(value ="/{id}/status" ,method = RequestMethod.PUT)
@@ -81,6 +89,20 @@ public class AdminResource {
     @RequestMapping(path =  "/credit",method = RequestMethod.POST)
     public void updateCredit(@RequestBody List<TutorCredit> credits) {
         tutorService.updateCredit(credits);
+        
+        List<TransactionData> dataList = new ArrayList<>();
+        for(TutorCredit tc : credits) {
+            TransactionData td = new TransactionData();
+            td.setAmount(td.getAmount());
+            td.setDateTime(LocalDateTime.now());
+            td.setRefId(null);
+            td.setTransType(TransType.DEBIT);
+            td.setUser(tc.getTutorId());
+            dataList.add(td);
+        }
+        transService.save(dataList);
+        
+        
     }
     
     

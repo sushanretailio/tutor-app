@@ -29,7 +29,7 @@ public class AppInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request ,HttpServletResponse response ,  Object handler) {
         log.info("Interceptor ");
-        return true;
+        return false;
     }
     
     @Override

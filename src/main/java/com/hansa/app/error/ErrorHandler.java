@@ -18,9 +18,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class ErrorHandler extends ResponseEntityExceptionHandler {
     
-     @ExceptionHandler(value = {RuntimeException.class,RequestException.class})
+     @ExceptionHandler(value = {RuntimeException.class,RequestException.class, UnAuthoriseException.class})
      public ResponseEntity<Object> handle(Exception ex) {
-         ex.printStackTrace();
+       //  ex.printStackTrace();
         return handleExceptions(ex);
     }
    

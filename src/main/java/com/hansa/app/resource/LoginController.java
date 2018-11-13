@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author sushant
  */
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*" , methods = {RequestMethod.GET,RequestMethod.PATCH,RequestMethod.POST,RequestMethod.PUT})
 @RestController
 @RequestMapping("/login")
 public class LoginController {
@@ -43,7 +43,7 @@ public class LoginController {
     @Autowired
     private EmailService emailService;
     
-    
+    @CrossOrigin(origins = "*")
     @RequestMapping(method=RequestMethod.POST)
     public User login(@RequestBody User user) {
         User foundUser = userRepo.get(user.getUserId(), user.getPassword());
@@ -68,6 +68,7 @@ public class LoginController {
         return userRepo.save(foundUser);
     }
     
+    @CrossOrigin(origins = "*")
     @GetMapping("/mail")
     public void testMail(@RequestParam("email") String email,@RequestParam("subject") String subject, @RequestParam("body") String body) {
         emailService.sendEmail(body, subject, email);

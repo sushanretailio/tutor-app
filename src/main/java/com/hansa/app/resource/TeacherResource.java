@@ -6,6 +6,8 @@
 package com.hansa.app.resource;
 
 
+import com.hansa.app.data.ClassSubjectMapping;
+import com.hansa.app.data.Education;
 import com.hansa.app.data.TransType;
 import com.hansa.app.data.TransactionData;
 import com.hansa.app.repo.TutorRepo;
@@ -13,15 +15,19 @@ import com.hansa.app.data.Tutor;
 import com.hansa.app.data.User;
 import com.hansa.app.error.RequestException;
 import com.hansa.app.model.PagedResponse;
+import com.hansa.app.repo.ClassSubjectMapRepo;
+import com.hansa.app.repo.EducationRepo;
 import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
 import com.hansa.app.service.MailUtil;
+import com.hansa.app.service.MapService;
 import com.hansa.app.service.S3Service;
 import com.hansa.app.service.TransService;
 import com.hansa.app.service.TutorService;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -69,6 +75,43 @@ public class TeacherResource {
     @Autowired
     private TransService transService;
     
+    @Autowired
+    private MapService  mapService;
+    
+    @Autowired
+    private EducationRepo educationRepo;
+    
+    @Autowired
+    private ClassSubjectMapRepo classSubjectMapRepo;
+    
+    
+    
+    @RequestMapping(value = "/{id}/map", method = RequestMethod.POST)
+    public void updateClassSubject(@PathVariable("id") Long id,@RequestBody List<ClassSubjectMapping> map) {
+        map.forEach(it-> it.setTutorId(id));
+        mapService.update(id, map);
+        
+    }
+    
+    @RequestMapping(value = "/{id}/map",method = RequestMethod.GET)
+    public List<ClassSubjectMapping> getMap(@PathVariable("id")Long id ) {
+        return classSubjectMapRepo.get(id);
+    }
+    
+    
+    @RequestMapping(value = "/{id}/education",method = RequestMethod.GET)
+    public List<Education> getEducation(@PathVariable("id")Long id ) {
+        return educationRepo.get(id);
+    }
+    
+    
+    @RequestMapping(value = "/{id}/education", method = RequestMethod.POST)
+    
+    public void updateEducation(@PathVariable("id") Long id,@RequestBody List<Education> map) {
+        map.forEach(it-> it.setTutorId(id));
+        educationRepo.saveAll(map);
+        
+    }
     
     
     @RequestMapping(value = "/{id}/upload", method = RequestMethod.POST)

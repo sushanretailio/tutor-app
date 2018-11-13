@@ -7,12 +7,15 @@ package com.hansa.app.data;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -40,6 +43,13 @@ public class Tutor implements Serializable {
     private String qualification;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    
+    @Transient
+    private List<ClassSubjectMapping> mapping;
+    
+    @Transient
+    private List<Education> education;
+    
     
     
     private int credit;
@@ -170,6 +180,22 @@ public class Tutor implements Serializable {
 
     public void setCredit(int credit) {
         this.credit = credit;
+    }
+
+    public List<ClassSubjectMapping> getMapping() {
+        return mapping;
+    }
+
+    public void setMapping(List<ClassSubjectMapping> mapping) {
+        this.mapping = mapping;
+    }
+
+    public List<Education> getEducation() {
+        return education;
+    }
+
+    public void setEducation(List<Education> education) {
+        this.education = education;
     }
     
     

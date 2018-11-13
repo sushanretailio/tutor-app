@@ -6,6 +6,7 @@
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/NotifType.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/UserRepository.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/UserRepo.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/service/MapService.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/error/ErrorHandler.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/StudentRepo.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/Application.java
@@ -17,6 +18,7 @@
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/NotifData.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/error/ErrorResponse.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Appointment.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/ClassSubjectMapping.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/proxy/TestProxy.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Tutor.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/UserRole.java
@@ -25,6 +27,7 @@
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/LoginController.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/error/UnAuthoriseException.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/JobResource.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/ClassGroup.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Job.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/service/S3Service.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/filter/AppFilter.java
@@ -32,12 +35,16 @@
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/ReviewRepo.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/service/TutorService.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Review.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/EducationRepo.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/ClassSubjectMapRepo.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/service/EmailService.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/model/TeacherAppointment.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/model/PagedResponse.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/JobApplicationResource.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/resource/TeacherResource.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/TransType.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Education.java
+/Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/SubjectMaster.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/data/Gender.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/repo/AppointmentRepo.java
 /Users/sushant/Documents/tutor-app/github/tutor-app/src/main/java/com/hansa/app/interceptor/AppInterceptor.java

@@ -1,5 +1,6 @@
 com/hansa/app/resource/TransResource.class
 com/hansa/app/service/S3Service.class
+com/hansa/app/data/ClassGroup.class
 com/hansa/app/repo/UserRepository.class
 com/hansa/app/Application$1.class
 com/hansa/app/interceptor/AppInterceptor.class
@@ -8,6 +9,7 @@ com/hansa/app/repo/AppointmentRepo.class
 com/hansa/app/resource/ReviewResource.class
 com/hansa/app/data/JobApplication.class
 com/hansa/app/data/JobStatus.class
+com/hansa/app/repo/ClassSubjectMapRepo.class
 com/hansa/app/repo/UserRepo.class
 com/hansa/app/service/MailUtil.class
 com/hansa/app/data/TransType.class
@@ -27,6 +29,7 @@ com/hansa/app/data/Job.class
 com/hansa/app/error/ErrorHandler.class
 com/hansa/app/service/TransService.class
 com/hansa/app/resource/AdminResource.class
+com/hansa/app/data/ClassSubjectMapping.class
 com/hansa/app/service/TutorService.class
 com/hansa/app/error/RequestException.class
 com/hansa/app/repo/ReviewRepo.class
@@ -36,8 +39,10 @@ com/hansa/app/data/NotifType.class
 com/hansa/app/model/PagedResponse.class
 com/hansa/app/model/TeacherAppointment.class
 com/hansa/app/data/Tutor.class
+com/hansa/app/data/Education.class
 com/hansa/app/resource/LoginController.class
 com/hansa/app/data/Gender.class
+com/hansa/app/repo/EducationRepo.class
 com/hansa/app/repo/StudentRepo.class
 com/hansa/app/data/User.class
 com/hansa/app/resource/AppointmentResource.class
@@ -51,3 +56,5 @@ com/hansa/app/repo/TutorRepo.class
 com/hansa/app/repo/JobRepo.class
 com/hansa/app/model/StudentAppointment.class
 com/hansa/app/data/NotifData.class
+com/hansa/app/data/SubjectMaster.class
+com/hansa/app/service/MapService.class

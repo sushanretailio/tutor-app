@@ -30,11 +30,12 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         } else if (ex instanceof UnAuthoriseException) {
             return new ResponseEntity(new ErrorResponse("Request processing failed", ex.getMessage()), HttpStatus.UNAUTHORIZED);
         }
-        return error();
+        return error(ex);
         
     }
     
-    private ResponseEntity<Object> error() {
+    private ResponseEntity<Object> error(Throwable ex) {
+        ex.printStackTrace();
         return new ResponseEntity(new ErrorResponse("ERROR", "System problem"), HttpStatus.INTERNAL_SERVER_ERROR);
 }
     

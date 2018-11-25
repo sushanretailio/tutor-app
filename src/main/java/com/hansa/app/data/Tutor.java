@@ -7,15 +7,12 @@ package com.hansa.app.data;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -49,6 +46,11 @@ public class Tutor implements Serializable {
     
     @Transient
     private List<Education> education;
+    
+    @Transient
+    private List<ZIpCode> zipCode;
+    
+    
     
     
     
@@ -196,6 +198,14 @@ public class Tutor implements Serializable {
 
     public void setEducation(List<Education> education) {
         this.education = education;
+    }
+
+    public List<ZIpCode> getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(List<ZIpCode> zipCode) {
+        this.zipCode = zipCode;
     }
     
     

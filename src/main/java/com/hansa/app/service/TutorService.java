@@ -7,9 +7,11 @@ package com.hansa.app.service;
 
 import com.hansa.app.data.Gender;
 import com.hansa.app.data.Tutor;
+import com.hansa.app.data.ZIpCode;
 import com.hansa.app.error.RequestException;
 import com.hansa.app.model.TutorCredit;
 import com.hansa.app.repo.TutorRepo;
+import com.hansa.app.repo.ZipRepo;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

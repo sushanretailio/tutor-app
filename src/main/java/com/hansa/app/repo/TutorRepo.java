@@ -8,8 +8,12 @@ package com.hansa.app.repo;
 
 import com.hansa.app.data.Gender;
 import com.hansa.app.data.Tutor;
+import com.hansa.app.search.SearchParam;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,7 +23,7 @@ import org.springframework.data.repository.query.Param;
  * @author sushant
  */
 
-public interface TutorRepo extends JpaRepository<Tutor, Long> {
+public interface TutorRepo extends JpaRepository<Tutor, Long>, JpaSpecificationExecutor<Tutor> {
     
     @Query("select t from Tutor t where t.id =:id ")
     Tutor getById(@Param("id") Long id) ;
@@ -32,4 +36,5 @@ public interface TutorRepo extends JpaRepository<Tutor, Long> {
     @Query("update Tutor t set credit= :credit where t.id =:id ")
     void updateCredit(@Param("id") Long id, @Param("credit") int credit) ;
     
+   
 }

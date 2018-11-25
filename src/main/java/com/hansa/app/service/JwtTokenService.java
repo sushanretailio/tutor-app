@@ -13,12 +13,20 @@ import com.hansa.app.data.User;
 import com.hansa.app.data.UserRole;
 import java.util.Date;
 import java.util.Map;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author sushant
  */
+
+@Service
 public class JwtTokenService {
+    
+    
+    private static final Log log = LogFactory.getFactory().getInstance(JwtTokenService.class);
     
     private final String key = "hansaa@2018";
     public String getToken(User user) {
@@ -36,7 +44,8 @@ public class JwtTokenService {
     
     
      public User parse(String token) {
-         JWTVerifier verifier = JWT.require(Algorithm.HMAC512(key))
+         try {
+             JWTVerifier verifier = JWT.require(Algorithm.HMAC512(key))
             .withIssuer("hansaa")
             .build();
          
@@ -50,6 +59,10 @@ public class JwtTokenService {
         user.setUserId(userId);
         user.setType(role.name());
         return user;
+         } catch(Exception e) {
+             log.error(e);
+             return null;
+         }
     }
     
 }

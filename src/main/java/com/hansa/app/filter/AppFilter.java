@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -25,6 +26,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class AppFilter extends OncePerRequestFilter {
 
     private Log log = LogFactory.getLog(AppFilter.class);
+    
+    @Autowired
+    private JwtTokenService jwtTokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest hsr, HttpServletResponse hsr1, FilterChain fc) throws ServletException, IOException {
@@ -39,10 +43,15 @@ public class AppFilter extends OncePerRequestFilter {
                // hsr1.setStatus(HttpStatus.UNAUTHORIZED.value());
                // hsr1.sendError(HttpStatus.UNAUTHORIZED.value(),"Token not found or invalid");
             } else {
-                User user = new JwtTokenService().parse(token);
-                log.info("User > " + user.getUserId());
-                hsr1.addHeader("userId", user.getUserId());
-                hsr1.addHeader("role", user.getType());
+                User user = jwtTokenService.parse(token);
+                if(user!=null) {
+                    log.info("User > " + user.getUserId());
+                    hsr1.addHeader("userId", user.getUserId());
+                    hsr1.addHeader("role", user.getType());
+                } else {
+                    log.info("No user found for given token ");
+                } 
+                
             }
         }
 

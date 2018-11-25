@@ -13,6 +13,7 @@ import com.hansa.app.data.TransactionData;
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.data.Tutor;
 import com.hansa.app.data.User;
+import com.hansa.app.data.ZIpCode;
 import com.hansa.app.error.RequestException;
 import com.hansa.app.model.PagedResponse;
 import com.hansa.app.repo.ClassSubjectMapRepo;
@@ -20,6 +21,7 @@ import com.hansa.app.repo.EducationRepo;
 import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
+import com.hansa.app.repo.ZipRepo;
 import com.hansa.app.service.MailUtil;
 import com.hansa.app.service.MapService;
 import com.hansa.app.service.S3Service;
@@ -27,7 +29,9 @@ import com.hansa.app.service.TransService;
 import com.hansa.app.service.TutorService;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -84,6 +88,22 @@ public class TeacherResource {
     @Autowired
     private ClassSubjectMapRepo classSubjectMapRepo;
     
+    @Autowired
+    private ZipRepo zipRepo;
+    
+    
+    @RequestMapping(value = "/{id}/zip", method = RequestMethod.POST)
+    public void updateZip(@PathVariable("id") Long id,@RequestBody List<String> map) {
+        List<ZIpCode> zip = new ArrayList<>();
+        for(String s : map) {
+            ZIpCode z = new ZIpCode();
+            z.setTutorId(id);
+            z.setZip(s);
+            zip.add(z);
+        }
+        zipRepo.saveAll(zip);
+        
+    }
     
     
     @RequestMapping(value = "/{id}/map", method = RequestMethod.POST)
@@ -135,6 +155,7 @@ public class TeacherResource {
         
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Tutor> pages =  tutorRepo.findAll(pageRequest);
+        
         PagedResponse pagedTutor = new PagedResponse();
         pagedTutor.setNext(pages.hasNext());
         pagedTutor.setPage(pages.getNumber());
@@ -162,8 +183,7 @@ public class TeacherResource {
         String url = s3Service.get("tutor_"+tutor.getId(), "png");
         tutor.setImageUrl(url);
         tutor.getReviews().forEach(it-> it.setTutor(null));
-        
-        
+        tutor.setZipCode(zipRepo.getByTutorId(id));
         
         return tutor;
     }

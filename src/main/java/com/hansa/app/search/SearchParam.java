@@ -16,7 +16,7 @@ public class SearchParam {
     private Integer stdClass;
     private String zip;
     private Integer subject;
-    private Integer qualification;
+    private String qualification;
     private Gender gender;
 
     public Integer getStdClass() {
@@ -43,11 +43,11 @@ public class SearchParam {
         this.subject = subject;
     }
 
-    public Integer getQualification() {
+    public String getQualification() {
         return qualification;
     }
 
-    public void setQualification(Integer qualification) {
+    public void setQualification(String qualification) {
         this.qualification = qualification;
     }
 

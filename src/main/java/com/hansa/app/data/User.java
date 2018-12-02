@@ -23,6 +23,8 @@ public class User implements Serializable {
     
     private Long refId;
     
+    private Boolean active;
+    
     @Transient
     private Object detail;
 
@@ -83,6 +85,14 @@ public class User implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
     
     

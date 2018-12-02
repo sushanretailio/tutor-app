@@ -6,6 +6,7 @@
 package com.hansa.app.data;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,8 +14,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -24,7 +27,6 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "tutor")
 public class Tutor implements Serializable {
-
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -38,8 +40,20 @@ public class Tutor implements Serializable {
     private String subjects;
     private String experience;
     private String qualification;
+    private String city;
+    private String state;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @Enumerated(EnumType.STRING)
+    private JobType jobType;
+    
+    
+    private String dob ;
+    private String whatsappNumber;
+    
+    @OneToMany(mappedBy = "tutor")
+    private List<TutorType> types;
+    private String partTimeReason;
     
     @Transient
     private List<ClassSubjectMapping> mapping;
@@ -49,9 +63,6 @@ public class Tutor implements Serializable {
     
     @Transient
     private List<ZIpCode> zipCode;
-    
-    
-    
     
     
     private int credit;
@@ -207,6 +218,63 @@ public class Tutor implements Serializable {
     public void setZipCode(List<ZIpCode> zipCode) {
         this.zipCode = zipCode;
     }
+
+    public List<TutorType> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<TutorType> types) {
+        this.types = types;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public JobType getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(JobType jobType) {
+        this.jobType = jobType;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getWhatsappNumber() {
+        return whatsappNumber;
+    }
+
+    public void setWhatsappNumber(String whatsappNumber) {
+        this.whatsappNumber = whatsappNumber;
+    }
+
+    public String getPartTimeReason() {
+        return partTimeReason;
+    }
+
+    public void setPartTimeReason(String partTimeReason) {
+        this.partTimeReason = partTimeReason;
+    }
+    
     
     
     

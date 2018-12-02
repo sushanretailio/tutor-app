@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -92,13 +91,28 @@ public class TeacherResource {
     private ZipRepo zipRepo;
     
     
+    
+    @RequestMapping(value = "/zip/{id}",method = RequestMethod.DELETE) 
+    public void deleteZip(@PathVariable("id") Long id) {
+        zipRepo.deleteById(id);
+    }
+    
+    @RequestMapping(value = "/map/{id}",method = RequestMethod.DELETE) 
+    public void deleteMap(@PathVariable("id") Long id) {
+        classSubjectMapRepo.deleteById(id);
+    }
+    
+    @RequestMapping(value = "/education/{id}",method = RequestMethod.DELETE) 
+    public void deleteEducation(@PathVariable("id") Long id) {
+        educationRepo.deleteById(id);
+    }
+    
+    
     @RequestMapping(value = "/{id}/zip", method = RequestMethod.POST)
-    public void updateZip(@PathVariable("id") Long id,@RequestBody List<String> map) {
+    public void updateZip(@PathVariable("id") Long id,@RequestBody List<ZIpCode> map) {
         List<ZIpCode> zip = new ArrayList<>();
-        for(String s : map) {
-            ZIpCode z = new ZIpCode();
+        for(ZIpCode z : map) {
             z.setTutorId(id);
-            z.setZip(s);
             zip.add(z);
         }
         zipRepo.saveAll(zip);
@@ -122,6 +136,11 @@ public class TeacherResource {
     @RequestMapping(value = "/{id}/education",method = RequestMethod.GET)
     public List<Education> getEducation(@PathVariable("id")Long id ) {
         return educationRepo.get(id);
+    }
+    
+    @RequestMapping(value = "/{id}/zip",method = RequestMethod.GET)
+    public List<ZIpCode> getZip(@PathVariable("id")Long id ) {
+        return zipRepo.getByTutorId(id);
     }
     
     
@@ -179,12 +198,12 @@ public class TeacherResource {
             throw new RequestException("Tutor not found "+id);
         }
         tutor.setReviews(reviewRepo.getByTutor(id));
-        
+        tutor.setEducation(educationRepo.get(id));
         String url = s3Service.get("tutor_"+tutor.getId(), "png");
         tutor.setImageUrl(url);
         tutor.getReviews().forEach(it-> it.setTutor(null));
         tutor.setZipCode(zipRepo.getByTutorId(id));
-        
+        tutor.setMapping(classSubjectMapRepo.get(id));
         return tutor;
     }
     

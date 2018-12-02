@@ -48,6 +48,10 @@ public class LoginController {
     public User login(@RequestBody User user) {
         User foundUser = userRepo.get(user.getUserId(), user.getPassword());
         if(foundUser==null) throw new RequestException("User not found.");
+        
+        if(!foundUser.getActive()) {
+            throw new RequestException("User not not active.");
+        }
         if(foundUser.getType().equals("STUDENT")) {
             foundUser.setDetail(studentRepo.getById(foundUser.getRefId()));
         } else {

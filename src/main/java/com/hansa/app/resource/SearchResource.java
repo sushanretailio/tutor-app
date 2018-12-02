@@ -7,16 +7,12 @@ package com.hansa.app.resource;
 
 import com.hansa.app.data.Gender;
 import com.hansa.app.data.Tutor;
-import com.hansa.app.model.PagedResponse;
 import com.hansa.app.search.SearchParam;
 import com.hansa.app.search.SearchSpecification;
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.search.SearchDB;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/search")
 public class SearchResource {
 
-    @Autowired
-    private TutorRepo tutorRepo;
-    
     @Autowired
     private SearchDB dB;
 
@@ -56,19 +49,7 @@ public class SearchResource {
             size = 10;
         }
 
-        PageRequest pageRequest = PageRequest.of(page, size);
-        
         SearchSpecification spec = new SearchSpecification(search);
-        /*
-        Page<Tutor> pages = tutorRepo.findAll(spec,pageRequest);
-        PagedResponse pagedTutor = new PagedResponse();
-        pagedTutor.setNext(pages.hasNext());
-        pagedTutor.setPage(pages.getNumber());
-        pagedTutor.setSize(pages.getTotalPages());
-        pagedTutor.setTotalSize(pages.getTotalElements());
-        pagedTutor.setContents(pages.getContent());
-        return pagedTutor;
-        */
         return dB.search(search);
         
     }

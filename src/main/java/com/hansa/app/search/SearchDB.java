@@ -27,13 +27,19 @@ public class SearchDB {
     private JdbcTemplate template;
     
     public List<Tutor> search(SearchParam param) {
-        String q = "select t.id, t.name, t.gender from tutor t left join pincode p on p.tutor_id = t.id and p.zip="+param.getZip()+" left join "
+        String q = "select t.id, t.name, t.gender,t.email,t.location,t.mobile,t.qualification from tutor t left join pincode p on p.tutor_id = t.id and p.zip="+param.getZip()+" left join "
                 + "class_subject_mapping m on m.tutor_id = t.id and m.class_group_id="+param.getStdClass()+" WHERE ";
         if(param.getStdClass()!=null) {
             q+=" m.class_group_id= "+param.getStdClass();
             if(param.getSubject()!=null) {
                 q+="  AND m.subject_master_id="+param.getSubject();
             }
+        }
+        if(param.getGender()!=null) {
+            q+=" AND t.gender='"+param.getGender().name()+"'";
+        }
+        if(param.getQualification()!=null && !param.getQualification().isEmpty()) {
+            q+=" AND t.qualification='"+param.getQualification()+"' limit 100";
         }
         
         
@@ -45,6 +51,9 @@ public class SearchDB {
                 t.setId(rs.getLong(1));
                 t.setName(rs.getString(2));
                 t.setGender(Gender.valueOf(rs.getString(3)));
+                t.setEmail(rs.getString(4));t.setLocation(rs.getString(5));
+                t.setMobile(rs.getString(6));
+                t.setQualification(rs.getString(7));
                 list.add(t);
             }
             return list;

@@ -31,6 +31,12 @@ public class Education {
     private String board;
     private String instituteName;
     private int year;
+    private String state;
+    private String stream;
+    private String mode;
+    private String marksObtained;
+    private String type;
+    
 
     public Long getId() {
         return id;
@@ -78,6 +84,46 @@ public class Education {
 
     public void setTutorId(Long tutorId) {
         this.tutorId = tutorId;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getStream() {
+        return stream;
+    }
+
+    public void setStream(String stream) {
+        this.stream = stream;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public String getMarksObtained() {
+        return marksObtained;
+    }
+
+    public void setMarksObtained(String marksObtained) {
+        this.marksObtained = marksObtained;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
     

@@ -7,7 +7,9 @@ package com.hansa.app.resource;
 
 
 import com.hansa.app.data.ClassSubjectMapping;
+import com.hansa.app.data.DocumentType;
 import com.hansa.app.data.Education;
+import com.hansa.app.data.Experience;
 import com.hansa.app.data.TransType;
 import com.hansa.app.data.TransactionData;
 import com.hansa.app.repo.TutorRepo;
@@ -18,6 +20,7 @@ import com.hansa.app.error.RequestException;
 import com.hansa.app.model.PagedResponse;
 import com.hansa.app.repo.ClassSubjectMapRepo;
 import com.hansa.app.repo.EducationRepo;
+import com.hansa.app.repo.ExperienceRepository;
 import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
@@ -90,6 +93,9 @@ public class TeacherResource {
     @Autowired
     private ZipRepo zipRepo;
     
+    @Autowired
+    private ExperienceRepository experienceRepository;
+    
     
     
     @RequestMapping(value = "/zip/{id}",method = RequestMethod.DELETE) 
@@ -138,6 +144,11 @@ public class TeacherResource {
         return educationRepo.get(id);
     }
     
+    @RequestMapping(value = "/{id}/experience",method = RequestMethod.GET)
+    public List<Experience> getExperience(@PathVariable("id")Long id ) {
+        return experienceRepository.get(id);
+    }
+    
     @RequestMapping(value = "/{id}/zip",method = RequestMethod.GET)
     public List<ZIpCode> getZip(@PathVariable("id")Long id ) {
         return zipRepo.getByTutorId(id);
@@ -152,12 +163,20 @@ public class TeacherResource {
         
     }
     
+    @RequestMapping(value = "/{id}/experience", method = RequestMethod.POST)
+    
+    public void updateExperience(@PathVariable("id") Long id,@RequestBody List<Experience> map) {
+        map.forEach(it-> it.setTutorId(id));
+        experienceRepository.saveAll(map);
+        
+    }
+    
     
     @RequestMapping(value = "/{id}/upload", method = RequestMethod.POST)
     public Boolean uploadPhoto(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
         try {
             byte[] bytes = file.getBytes();
-            String url = s3Service.save(bytes, "png", "tutor_"+id);
+            String url = s3Service.save(bytes, "png", "tutor_"+id,DocumentType.PHOTO);
             System.out.println("Url "+url);
             return true;
         } catch(IOException | IllegalStateException ex) {
@@ -203,6 +222,7 @@ public class TeacherResource {
         tutor.setImageUrl(url);
         tutor.getReviews().forEach(it-> it.setTutor(null));
         tutor.setZipCode(zipRepo.getByTutorId(id));
+        tutor.setExperiences(experienceRepository.get(id));
         tutor.setMapping(classSubjectMapRepo.get(id));
         return tutor;
     }

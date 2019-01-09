@@ -1,7 +1,6 @@
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hansa.app.data.Tutor;
-import java.io.File;
+import com.hansa.app.data.DocumentType;
+import com.hansa.app.service.S3Service;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,8 +15,8 @@ import java.io.File;
 public class Test {
     
     public static void main(String[] args) throws Exception {
-        Tutor t = new ObjectMapper().readValue(new File("data.json"), Tutor.class);
-        System.out.println(t.getName());
-        
+        S3Service serv = new S3Service();
+        String url = serv.save("Test".getBytes(), "text", "testKey",DocumentType.CV);
+        System.out.println(url);
     }
 }

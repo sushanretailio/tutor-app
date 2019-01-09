@@ -64,6 +64,8 @@ public class Tutor implements Serializable {
     @Transient
     private List<ZIpCode> zipCode;
     
+    @Transient
+    private List<Experience> experiences;
     
     private int credit;
     @Transient
@@ -273,6 +275,14 @@ public class Tutor implements Serializable {
 
     public void setPartTimeReason(String partTimeReason) {
         this.partTimeReason = partTimeReason;
+    }
+
+    public List<Experience> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(List<Experience> experiences) {
+        this.experiences = experiences;
     }
     
     

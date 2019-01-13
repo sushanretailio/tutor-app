@@ -22,5 +22,9 @@ public interface EducationRepo extends CrudRepository<Education, Long> {
    
    @Query("select m from Education m where m.tutorId =:tutorId")
    public List<Education> get(@Param("tutorId") Long tutorId);
+   
+   @Query("select m from Education m where m.id =:id")
+   public Education getById(@Param("id") Long id);
+   
     
 }

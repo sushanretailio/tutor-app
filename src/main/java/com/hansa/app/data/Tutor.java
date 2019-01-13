@@ -6,7 +6,6 @@
 package com.hansa.app.data;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -68,7 +66,6 @@ public class Tutor implements Serializable {
     private List<Experience> experiences;
     
     private int credit;
-    @Transient
     private String imageUrl;
     
     

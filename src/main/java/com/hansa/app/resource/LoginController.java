@@ -7,6 +7,7 @@ package com.hansa.app.resource;
 
 import com.hansa.app.data.User;
 import com.hansa.app.error.RequestException;
+import com.hansa.app.repo.AdminRepo;
 import com.hansa.app.repo.StudentRepo;
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.repo.UserRepo;
@@ -41,6 +42,9 @@ public class LoginController {
     private TutorRepo tutorRepo;
     
     @Autowired
+    private AdminRepo adminRepo;
+    
+    @Autowired
     private EmailService emailService;
     
     @CrossOrigin(origins = "*")
@@ -54,11 +58,17 @@ public class LoginController {
         }
         if(foundUser.getType().equals("STUDENT")) {
             foundUser.setDetail(studentRepo.getById(foundUser.getRefId()));
-        } else {
+        } else if(foundUser.getType().equals("TUTOR")){
             foundUser.setDetail(tutorRepo.getById(foundUser.getRefId()));
+        } else if(foundUser.getType().equals("ADMIN")){
+            foundUser.setDetail(adminRepo.getById(foundUser.getRefId()));
+        } else {
+          throw new RequestException("No user found with given details.");
         }
+        
         String token = new JwtTokenService().getToken(foundUser);
         foundUser.setToken(token);
+        System.out.println("Token is "+token);
         return foundUser;
     }
     

@@ -24,6 +24,7 @@ com/hansa/app/search/ClassSubjectMappingSpec.class
 com/hansa/app/data/TransType.class
 com/hansa/app/error/UnAuthoriseException.class
 com/hansa/app/data/UserRole.class
+com/hansa/app/data/JobStatusData.class
 com/hansa/app/resource/JobResource.class
 com/hansa/app/data/Experience.class
 com/hansa/app/service/EmailService$1.class
@@ -53,13 +54,17 @@ com/hansa/app/repo/ClassGroupRepo.class
 com/hansa/app/model/PagedResponse.class
 com/hansa/app/model/TeacherAppointment.class
 com/hansa/app/data/Tutor.class
+com/hansa/app/data/UserStatus.class
 com/hansa/app/data/Education.class
 com/hansa/app/resource/LoginController.class
+com/hansa/app/data/ApplicationStatus.class
+com/hansa/app/service/JobService.class
 com/hansa/app/data/Gender.class
 com/hansa/app/search/SearchParam.class
 com/hansa/app/repo/ZipRepo.class
 com/hansa/app/repo/EducationRepo.class
 com/hansa/app/repo/StudentRepo.class
+com/hansa/app/repo/JobStatusRepo.class
 com/hansa/app/data/User.class
 com/hansa/app/resource/AppointmentResource.class
 com/hansa/app/resource/TeacherResource.class

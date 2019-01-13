@@ -39,11 +39,11 @@ public class S3Service {
             meta.setContentLength(data.length);
             meta.setContentType(type);
             s3.putObject(new PutObjectRequest(bucket, documentType+"/"+key+"."+type, stream, meta));
-            return get(key,type);
+            return get(key,type, documentType);
     }
     
-    public String get(String key,String type) {
-        return baseUrl+"/"+key+"."+type;
+    public String get(String key,String type,DocumentType documentType) {
+        return baseUrl+"/"+documentType.name()+"/"+key+"."+type;
     }
     
 }

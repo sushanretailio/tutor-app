@@ -10,13 +10,16 @@ import com.hansa.app.data.JobApplication;
 import com.hansa.app.data.JobStatus;
 import com.hansa.app.data.TransType;
 import com.hansa.app.data.TransactionData;
+import com.hansa.app.data.User;
 import com.hansa.app.data.UserRole;
+import com.hansa.app.data.UserStatus;
 import com.hansa.app.error.RequestException;
 import com.hansa.app.model.PagedResponse;
 import com.hansa.app.model.TutorCredit;
 import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.JobRepo;
 import com.hansa.app.repo.TutorRepo;
+import com.hansa.app.repo.UserRepository;
 import com.hansa.app.service.TransService;
 import com.hansa.app.service.TutorService;
 import java.time.LocalDateTime;
@@ -62,6 +65,9 @@ public class AdminResource {
     @Autowired
     private TransService transService;
     
+    @Autowired
+    private UserRepository userRepository;
+    
     
     
     
@@ -101,8 +107,18 @@ public class AdminResource {
             dataList.add(td);
         }
         transService.save(dataList);
-        
-        
+    }
+    
+    
+    @RequestMapping(path = "/user/{id}/status",method = RequestMethod.POST)
+    public void userStatus(@PathVariable("id") Long id, @RequestParam("status") UserStatus status) {
+        User user = userRepository.get(id);
+        if(status==UserStatus.ACTIVE) {
+            user.setActive(Boolean.TRUE);
+        } else if(status==UserStatus.INACTIVE) {
+            user.setActive(Boolean.FALSE);
+        }
+        userRepository.save(user);
     }
     
     

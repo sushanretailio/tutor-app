@@ -5,7 +5,11 @@
  */
 package com.hansa.app.resource;
 
+import com.hansa.app.data.ApplicationStatus;
+import com.hansa.app.data.Job;
 import com.hansa.app.data.JobApplication;
+import com.hansa.app.data.JobStatus;
+import com.hansa.app.error.RequestException;
 import com.hansa.app.model.PagedResponse;
 import com.hansa.app.repo.JobApplicationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +32,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/jobApplication")
 public class JobApplicationResource {
     
-    
-    
-    
-    
     @Autowired
     private JobApplicationRepo applicationRepo;
    
@@ -51,4 +51,22 @@ public class JobApplicationResource {
         resp.setTotalSize(jobs.getTotalElements());
         return resp;
     }
+    
+    @RequestMapping(path="/{id}/status",method = RequestMethod.PUT)
+    public JobApplication updateStatus(@PathVariable("id") Long id, @RequestParam("status") ApplicationStatus status) {
+        JobApplication ja= applicationRepo.getById(id);
+        if(ja.getJob()!=null) {
+            Job job = ja.getJob();
+            if(job.getStatus()==JobStatus.CANCELLED ||  job.getStatus()==JobStatus.CLOSED) {
+            throw new RequestException("Job is Cancelled / Closed");
+        }
+        }
+        if(ja.getStatus().equals("CACELLED") ||  ja.getStatus().equals("CLOSED")) {
+            throw new RequestException("Application is Cancelled / Closed");
+        }
+        ja.setStatus(status.name());
+        return applicationRepo.save(ja);
+    }
+    
+    
 }

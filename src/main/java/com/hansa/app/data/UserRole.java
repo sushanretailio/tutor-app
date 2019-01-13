@@ -10,6 +10,6 @@ package com.hansa.app.data;
  * @author sushant
  */
 public enum UserRole {
-    STUDENT,ADMIN,TUTOR,ANONIMOUS
+    STUDENT,ADMIN,TUTOR,ANONIMOUS,JOB_MANAGER
     
 }

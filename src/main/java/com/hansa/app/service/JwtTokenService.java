@@ -53,8 +53,9 @@ public class JwtTokenService {
         
         
         Map map = verify.getClaims();
-        String userId = verify.getClaim("userId").asString();
+        String userId = verify.getClaim("name").asString();
         UserRole role = UserRole.valueOf(verify.getClaim("role").asString());
+        log.info("user "+userId+", Role "+role);
         User user = new User();
         user.setUserId(userId);
         user.setType(role.name());

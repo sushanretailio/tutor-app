@@ -10,6 +10,7 @@ import com.hansa.app.data.ClassSubjectMapping;
 import com.hansa.app.data.DocumentType;
 import com.hansa.app.data.Education;
 import com.hansa.app.data.Experience;
+import com.hansa.app.data.JobApplication;
 import com.hansa.app.data.TransType;
 import com.hansa.app.data.TransactionData;
 import com.hansa.app.repo.TutorRepo;
@@ -144,6 +145,7 @@ public class TeacherResource {
         return educationRepo.get(id);
     }
     
+    
     @RequestMapping(value = "/{id}/experience",method = RequestMethod.GET)
     public List<Experience> getExperience(@PathVariable("id")Long id ) {
         return experienceRepository.get(id);
@@ -178,6 +180,28 @@ public class TeacherResource {
             byte[] bytes = file.getBytes();
             String url = s3Service.save(bytes, "png", "tutor_"+id,DocumentType.PHOTO);
             System.out.println("Url "+url);
+            
+            Tutor tutor = tutorRepo.getById(id);
+            tutor.setImageUrl(url);
+            tutorRepo.save(tutor);
+            return true;
+        } catch(IOException | IllegalStateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
+    
+    @RequestMapping(value = "/education/{id}/upload", method = RequestMethod.POST)
+    public Boolean uploadEducationDocument(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            byte[] bytes = file.getBytes();
+            String url = s3Service.save(bytes, "png", "tutor_"+id,DocumentType.CERTIFICATE);
+            System.out.println("Url "+url);
+            
+            Education edu = educationRepo.getById(id);
+            edu.setUrl(url);
+            educationRepo.save(edu);
             return true;
         } catch(IOException | IllegalStateException ex) {
             ex.printStackTrace();
@@ -218,8 +242,6 @@ public class TeacherResource {
         }
         tutor.setReviews(reviewRepo.getByTutor(id));
         tutor.setEducation(educationRepo.get(id));
-        String url = s3Service.get("tutor_"+tutor.getId(), "png");
-        tutor.setImageUrl(url);
         tutor.getReviews().forEach(it-> it.setTutor(null));
         tutor.setZipCode(zipRepo.getByTutorId(id));
         tutor.setExperiences(experienceRepository.get(id));

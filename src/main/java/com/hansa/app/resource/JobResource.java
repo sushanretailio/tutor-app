@@ -5,7 +5,6 @@
  */
 package com.hansa.app.resource;
 
-import com.hansa.app.data.Gender;
 import com.hansa.app.data.Job;
 import com.hansa.app.data.JobApplication;
 import com.hansa.app.data.JobStatus;

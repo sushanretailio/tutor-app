@@ -31,5 +31,8 @@ public interface JobApplicationRepo extends JpaRepository<JobApplication, Long> 
     @Query("select a from JobApplication a where a.tutor.id =:tutorId")
     Page<JobApplication> getAllByTutorId(@Param("tutorId") Long tutorId,Pageable page);
     
+    @Query("select a from JobApplication a where a.id =:id")
+    JobApplication getById(@Param("id") Long id);
+    
     
 }

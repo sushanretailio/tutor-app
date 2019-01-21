@@ -26,6 +26,7 @@ public class MapService {
     @Transactional
     public void update(Long id, List<ClassSubjectMapping> map) {
         classSubjectMapRepo.delete(id);
+        //map.forEach(it-> it.setTutorId(id));
         classSubjectMapRepo.saveAll(map);
     }
 }

@@ -34,6 +34,24 @@ public class JobApplicationResource {
     
     @Autowired
     private JobApplicationRepo applicationRepo;
+    
+    
+    
+    @RequestMapping(path="/{id}/contact",method = RequestMethod.PUT)
+    public JobApplication updateContact(@PathVariable("id") Long id, @PathVariable("enabled") boolean enabled ) {
+        JobApplication ja= applicationRepo.getById(id);
+        if(ja.getJob()!=null) {
+            Job job = ja.getJob();
+            if(job.getStatus()==JobStatus.CANCELLED ||  job.getStatus()==JobStatus.CLOSED) {
+            throw new RequestException("Job is Cancelled / Closed");
+        }
+        }
+        if(ja.getStatus().equals("CACELLED") ||  ja.getStatus().equals("CLOSED")) {
+            throw new RequestException("Application is Cancelled / Closed");
+        }
+        ja.setContactEnabled(enabled);
+        return applicationRepo.save(ja);
+    }
    
     
     @RequestMapping(path="/{id}",method = RequestMethod.GET)

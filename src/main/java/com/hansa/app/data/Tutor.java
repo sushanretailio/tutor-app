@@ -68,6 +68,9 @@ public class Tutor implements Serializable {
     private int credit;
     private String imageUrl;
     
+    @Transient
+    private int age;
+    
     
     
     @Transient
@@ -280,6 +283,14 @@ public class Tutor implements Serializable {
 
     public void setExperiences(List<Experience> experiences) {
         this.experiences = experiences;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
     
     

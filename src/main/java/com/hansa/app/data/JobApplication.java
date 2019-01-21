@@ -35,6 +35,9 @@ public class JobApplication implements Serializable {
     @Column(name = "updated_on")
     private LocalDateTime updatedOn;
     private String status;
+    
+    @Column(name = "contact_enabled")
+    private boolean contactEnabled;
 
     public Long getId() {
         return id;
@@ -74,6 +77,14 @@ public class JobApplication implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public boolean isContactEnabled() {
+        return contactEnabled;
+    }
+
+    public void setContactEnabled(boolean contactEnabled) {
+        this.contactEnabled = contactEnabled;
     }
     
     

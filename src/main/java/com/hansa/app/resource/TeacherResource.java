@@ -202,6 +202,24 @@ public class TeacherResource {
             return false;
         }
     }
+    
+    
+    @RequestMapping(value = "/address/{id}/upload", method = RequestMethod.POST)
+    public Boolean uploadAddressDocument(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            byte[] bytes = file.getBytes();
+            String url = s3Service.save(bytes, "png", "tutor_" + id, DocumentType.ADDRESS);
+            System.out.println("Url " + url);
+
+            Education edu = educationRepo.getById(id);
+            edu.setUrl(url);
+            educationRepo.save(edu);
+            return true;
+        } catch (IOException | IllegalStateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 
     @RequestMapping(method = {RequestMethod.GET})
     public PagedResponse getTutors(@RequestParam(name = "page", required = false) Integer page, @RequestParam(name = "size", required = false) Integer size) {

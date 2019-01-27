@@ -10,6 +10,6 @@ package com.hansa.app.data;
  * @author sushant
  */
 public enum DocumentType {
-    PHOTO, CV,MARKSHEET,CERTIFICATE
+    PHOTO, CV,MARKSHEET,CERTIFICATE, ADDRESS
     
 }

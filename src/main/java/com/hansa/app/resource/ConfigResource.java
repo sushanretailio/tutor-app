@@ -5,17 +5,21 @@
  */
 package com.hansa.app.resource;
 
+import com.hansa.app.data.City;
 import com.hansa.app.data.ClassGroup;
+import com.hansa.app.data.State;
 import com.hansa.app.data.SubjectMaster;
 import com.hansa.app.model.ConfigData;
+import com.hansa.app.repo.CityRepo;
 import com.hansa.app.repo.ClassGroupRepo;
+import com.hansa.app.repo.StateRepo;
 import com.hansa.app.repo.SubjectRepo;
-import com.hansa.app.service.EmailService;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +44,13 @@ public class ConfigResource {
     
     @Autowired
     private SubjectRepo subjectRepo;
+    
+    @Autowired
+    private StateRepo stateRepo;
+    
+    @Autowired
+    private CityRepo cityRepo;
+    
     
     
     @RequestMapping(value = "/class", method = RequestMethod.POST) 
@@ -68,6 +79,28 @@ public class ConfigResource {
     public Iterable<SubjectMaster> updateSubject() {
         return subjectRepo.all();
         
+    }
+    
+    @RequestMapping(value = "/state", method = RequestMethod.GET)
+    public Iterable<State> getStates() {
+        return stateRepo.findAll();
+    }
+    
+    @RequestMapping(value = "/{id}/city", method = RequestMethod.GET)
+    public Iterable<City> getCities(@PathVariable("id") Long id) {
+        return cityRepo.getByState(id);
+    }
+    
+    
+    @RequestMapping(value = "/state", method = RequestMethod.POST)
+    public State addState(@RequestBody State state) {
+        return stateRepo.save(state);
+    }
+    
+    @RequestMapping(value = "/{id}/city", method = RequestMethod.POST)
+    public City addState(@PathVariable("id") Long id,@RequestBody City city) {
+        city.setStateId(id);
+        return cityRepo.save(city);
     }
     
     

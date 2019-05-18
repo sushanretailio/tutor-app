@@ -3,3 +3,4 @@
 *.lst
 */target/*
 */target/**
+*.jar

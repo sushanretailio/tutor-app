@@ -11,6 +11,7 @@ import com.hansa.app.data.Student;
 import com.hansa.app.data.User;
 import com.hansa.app.repo.ReviewRepo;
 import com.hansa.app.repo.UserRepo;
+import com.hansa.app.service.SequenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,10 @@ public class StudentResource {
     @Autowired
     private ReviewRepo reviewRepo;
     
+    @Autowired
+    private SequenceService sequenceService;
+            
+    
     
     
     @RequestMapping(method = {RequestMethod.GET})
@@ -62,6 +67,9 @@ public class StudentResource {
             throw new RuntimeException("Mobile number cant be empty");
         }
         Student std= studentRepo.save(student);
+        String seq = sequenceService.getStudentSequence(std.getId());
+        std.setSequenceId(seq);
+        studentRepo.save(std);
         User user = new User();
         user.setRefId(std.getId());
         user.setType("STUDENT");

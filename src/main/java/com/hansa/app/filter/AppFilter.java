@@ -32,26 +32,25 @@ public class AppFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest hsr, HttpServletResponse hsr1, FilterChain fc) throws ServletException, IOException {
-        log.info("Filter "+hsr.getRequestURI());
-        
         String requestpath = hsr.getRequestURI();
         if (!requestpath.contains("/login")) {
-            log.info("Request path " + requestpath);
             String token = hsr.getHeader("Authorization");
             if (token == null) {
-                log.info("No Token found");
+                //log.info("No Token found");
                // hsr1.setStatus(HttpStatus.UNAUTHORIZED.value());
                // hsr1.sendError(HttpStatus.UNAUTHORIZED.value(),"Token not found or invalid");
             } else {
+                /*
                 User user = jwtTokenService.parse(token);
                 if(user!=null) {
                     log.info("User > " + user.getUserId());
                     hsr1.addHeader("userId", user.getUserId());
                     hsr1.addHeader("role", user.getType());
+                        
                 } else {
                     log.info("No user found for given token ");
                 } 
-                
+             */   
             }
         }
 

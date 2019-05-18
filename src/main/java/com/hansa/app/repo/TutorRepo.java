@@ -6,12 +6,8 @@
 package com.hansa.app.repo;
 
 
-import com.hansa.app.data.Gender;
 import com.hansa.app.data.Tutor;
-import com.hansa.app.search.SearchParam;
 import java.util.List;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -27,6 +23,9 @@ public interface TutorRepo extends JpaRepository<Tutor, Long>, JpaSpecificationE
     
     @Query("select t from Tutor t where t.id =:id ")
     Tutor getById(@Param("id") Long id) ;
+    
+    @Query("select t from Tutor t where t.mobile =:mobile ")
+    Tutor getByMobile(@Param("mobile") String mobile) ;
     
     
     @Query("select t from Tutor t ")

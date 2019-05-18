@@ -20,6 +20,7 @@ import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.JobRepo;
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.repo.UserRepository;
+import com.hansa.app.service.SMSService;
 import com.hansa.app.service.TransService;
 import com.hansa.app.service.TutorService;
 import java.time.LocalDateTime;
@@ -68,7 +69,8 @@ public class AdminResource {
     @Autowired
     private UserRepository userRepository;
     
-    
+    @Autowired
+    private SMSService sMSService;
     
     
     @RequestMapping(value ="/{id}/status" ,method = RequestMethod.PUT)
@@ -137,5 +139,14 @@ public class AdminResource {
         resp.setPage(jobs.getTotalPages());
         resp.setTotalSize(jobs.getTotalElements());
         return resp;
+    }
+    
+    @RequestMapping(method = RequestMethod.POST,path = "/sms")
+    public void sendSms(@RequestParam("number") String number, @RequestParam("msg") String msg) {
+        try {
+            sMSService.sendSMS(number, msg);
+        } catch(Exception e) {
+            throw new RequestException("SMS Error "+e.getMessage());
+        }
     }
 }

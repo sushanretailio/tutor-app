@@ -27,6 +27,7 @@ import com.hansa.app.repo.ZipRepo;
 import com.hansa.app.service.MailUtil;
 import com.hansa.app.service.MapService;
 import com.hansa.app.service.S3Service;
+import com.hansa.app.service.SequenceService;
 import com.hansa.app.service.TransService;
 import com.hansa.app.service.TutorService;
 import java.io.IOException;
@@ -34,6 +35,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 import static java.util.Calendar.YEAR;
 import java.util.Date;
@@ -100,6 +102,9 @@ public class TeacherResource {
     @Autowired
     private ExperienceRepository experienceRepository;
 
+    @Autowired
+    private SequenceService sequenceService;
+
     @RequestMapping(value = "/zip/{id}", method = RequestMethod.DELETE)
     public void deleteZip(@PathVariable("id") Long id) {
         zipRepo.deleteById(id);
@@ -124,6 +129,21 @@ public class TeacherResource {
         }
         zipRepo.saveAll(zip);
 
+    }
+
+    @RequestMapping(value = "/{id}/validateOtp")
+    public void validateOtp(@PathVariable("id") Long id, @RequestBody String otp) {
+
+        Tutor t = tutorRepo.getById(id);
+        if (t.isOtpValidated()) {
+            return;
+        }
+        if (!t.getOtp().equalsIgnoreCase(otp)) {
+            throw new RequestException("Opt mismatch.");
+        }
+
+        t.setOtpValidated(true);
+        tutorRepo.save(t);
     }
 
     @RequestMapping(value = "/{id}/map", method = RequestMethod.POST)
@@ -202,8 +222,7 @@ public class TeacherResource {
             return false;
         }
     }
-    
-    
+
     @RequestMapping(value = "/address/{id}/upload", method = RequestMethod.POST)
     public Boolean uploadAddressDocument(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
         try {
@@ -262,8 +281,8 @@ public class TeacherResource {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date dob = df.parse(tutor.getDob());
-            tutor.setAge(getDiffYears( dob, new Date()));
-        } catch(Exception e) {
+            tutor.setAge(getDiffYears(dob, new Date()));
+        } catch (Exception e) {
             System.out.println("Error in parsig Date");
         }
         return tutor;
@@ -275,21 +294,32 @@ public class TeacherResource {
             throw new RequestException("Mobile number cant be empty");
         }
 
+        Tutor existing = tutorRepo.getByMobile(tutor.getMobile());
+        if (existing != null) {
+            throw new RequestException("Mobile number already exists.");
+        }
+
         tutor.setCredit(500);
         Tutor updated = tutorRepo.save(tutor);
-        System.out.println("ID for new tutor is "+updated.getId());
-        
-        if(tutor.getMapping()!=null) {
+        String seq = sequenceService.getTutorSequence(updated.getId());
+        updated.setSequenceId(seq);
+        String s = System.currentTimeMillis() + "";
+        updated.setOtp(s.substring(0, 4));
+        updated.setOtpValidated(false);
+        tutorRepo.save(updated);
+        System.out.println("ID for new tutor is " + updated.getId());
+        if (tutor.getMapping() != null) {
             System.out.println("Mappig for class subject foud.");
-            tutor.getMapping().forEach(it-> it.setTutorId(updated.getId()));
+            tutor.getMapping().forEach(it -> it.setTutorId(updated.getId()));
             mapService.update(updated.getId(), tutor.getMapping());
         }
-        
+
         User user = new User();
         user.setRefId(updated.getId());
         user.setType("TUTOR");
         user.setUserId(updated.getMobile());
         user.setPassword(tutor.getMobile());
+        user.setActive(Boolean.TRUE);
         userRepo.save(user);
         user.setDetail(updated);
 

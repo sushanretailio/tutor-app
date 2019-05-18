@@ -18,6 +18,7 @@ import com.hansa.app.repo.JobApplicationRepo;
 import com.hansa.app.repo.JobRepo;
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.service.MailUtil;
+import com.hansa.app.service.SequenceService;
 import com.hansa.app.service.TransService;
 import com.hansa.app.service.TutorService;
 import java.time.LocalDateTime;
@@ -65,13 +66,20 @@ public class JobResource {
     @Autowired
     private TransService transService;
     
+    @Autowired
+    private SequenceService sequenceService;
+    
     @RequestMapping(method = RequestMethod.POST)
     public Job post(@RequestBody Job job) {
         job.setStatus(JobStatus.OPEN);
         job.setCreatedOn(LocalDateTime.now());
         List<Tutor> all = tutorService.findAll(job.getSubject(), job.getGender());
         mailUtil.jobNotification(all, job);
-        return jobRepo.save(job);
+        Job updated=  jobRepo.save(job);
+        String seq = sequenceService.getJobSequence(updated.getId());
+        updated.setSequenceId(seq);
+        return jobRepo.save(updated);
+        
     }
     
     @RequestMapping(value ="/{id}/apply" ,method = RequestMethod.PUT)

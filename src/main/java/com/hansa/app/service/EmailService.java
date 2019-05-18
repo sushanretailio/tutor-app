@@ -25,8 +25,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
     
-    private final String username = "myta377@gmail.com";
-    private final String password = "ashokjha";
+    private final String username = "help.hansatutor@gmail.com";
+    private final String password = "Remann@18";
 
 
     @PostConstruct
@@ -75,6 +75,7 @@ public class EmailService {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, to);
+            message.setRecipients(Message.RecipientType.BCC, username);
             message.setSubject(subject); 
             message.setText(body);
             Transport.send(message);

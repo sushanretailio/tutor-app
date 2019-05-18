@@ -44,6 +44,9 @@ public class Tutor implements Serializable {
     private Gender gender;
     @Enumerated(EnumType.STRING)
     private JobType jobType;
+    private String sequenceId;
+    private String otp;
+    private boolean otpValidated;
     
     
     private String dob ;
@@ -292,9 +295,29 @@ public class Tutor implements Serializable {
     public void setAge(int age) {
         this.age = age;
     }
-    
-    
-    
-    
+
+    public String getSequenceId() {
+        return sequenceId;
+    }
+
+    public void setSequenceId(String sequenceId) {
+        this.sequenceId = sequenceId;
+    }
+
+    public boolean isOtpValidated() {
+        return otpValidated;
+    }
+
+    public void setOtpValidated(boolean otpValidated) {
+        this.otpValidated = otpValidated;
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
     
 }

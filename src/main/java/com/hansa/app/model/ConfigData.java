@@ -5,6 +5,7 @@
  */
 package com.hansa.app.model;
 
+import com.hansa.app.data.ClassCategory;
 import com.hansa.app.data.ClassGroup;
 import com.hansa.app.data.SubjectMaster;
 import java.util.List;
@@ -17,6 +18,7 @@ public class ConfigData {
     
     private List<ClassGroup> classes;
     private List<SubjectMaster> subjects;
+    private List<ClassCategory> categories ;
 
     public List<ClassGroup> getClasses() {
         return classes;
@@ -32,6 +34,14 @@ public class ConfigData {
 
     public void setSubjects(List<SubjectMaster> subjects) {
         this.subjects = subjects;
+    }
+
+    public List<ClassCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<ClassCategory> categories) {
+        this.categories = categories;
     }
     
     

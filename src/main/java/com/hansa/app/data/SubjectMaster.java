@@ -5,6 +5,7 @@
  */
 package com.hansa.app.data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,8 @@ public class SubjectMaster {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "class_group_id")
+    private Long classGroupId;
 
     public Long getId() {
         return id;
@@ -39,6 +42,16 @@ public class SubjectMaster {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Long getClassGroupId() {
+        return classGroupId;
+    }
+
+    public void setClassGroupId(Long classGroupId) {
+        this.classGroupId = classGroupId;
+    }
+    
+    
     
     
 }

@@ -45,6 +45,7 @@ public class Job implements Serializable {
     private String subject;
     private String location;
     private String city;
+    private String sequenceId;
     
     //@Transient
     
@@ -134,6 +135,15 @@ public class Job implements Serializable {
     public void setApplications(List<JobApplication> applications) {
         this.applications = applications;
     }
+
+    public String getSequenceId() {
+        return sequenceId;
+    }
+
+    public void setSequenceId(String sequenceId) {
+        this.sequenceId = sequenceId;
+    }
+    
     
     
     

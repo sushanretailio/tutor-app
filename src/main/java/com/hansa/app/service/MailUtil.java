@@ -58,7 +58,7 @@ public class MailUtil {
             }
             StringWriter writer = new StringWriter();
             t.merge(context, writer);
-            emailService.sendEmail(writer.toString(), "Hannsaa job posting", toList);
+            emailService.sendEmail(writer.toString(), "Hansa Tutor job posting", toList);
             
         } catch (Exception ex) {
             log.error(ex);
@@ -74,13 +74,14 @@ public class MailUtil {
         try {
             Template t = ve.getTemplate("job_apply.vm");
             VelocityContext context = new VelocityContext();
+            context.put("name", tutor.getName());
             context.put("stdName", job.getStudent().getName());
             context.put("stdCls", job.getClassName());
             context.put("subject", job.getSubject());
             context.put("credit",tutor.getCredit());
             StringWriter writer = new StringWriter();
             t.merge(context, writer);
-            emailService.sendEmail(writer.toString(), "Hannsaa job application", tutor.getEmail());
+            emailService.sendEmail(writer.toString(), "Hansa Tutor job application", tutor.getEmail());
             
         } catch (Exception ex) {
             log.error(ex);
@@ -92,14 +93,14 @@ public class MailUtil {
     public void tutorRegister(Tutor tutor) {
         log.info("Sending tutor registration email");
         try {
-            Template t = ve.getTemplate("tutor-register.vm");
+            Template t = ve.getTemplate("tutor-register_1.vm");
             VelocityContext context = new VelocityContext();
             context.put("name", tutor.getName());
             context.put("mobile", tutor.getMobile());
             context.put("password", tutor.getMobile());
             StringWriter writer = new StringWriter();
             t.merge(context, writer);
-            emailService.sendEmail(writer.toString(), "Hannsaa registration", tutor.getEmail());
+            emailService.sendEmail(writer.toString(), "Hansa Tutor registration", tutor.getEmail());
             
         } catch (Exception ex) {
             log.error(ex);

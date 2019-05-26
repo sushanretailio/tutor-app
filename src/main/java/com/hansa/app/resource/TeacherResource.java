@@ -27,6 +27,7 @@ import com.hansa.app.repo.ZipRepo;
 import com.hansa.app.service.MailUtil;
 import com.hansa.app.service.MapService;
 import com.hansa.app.service.S3Service;
+import com.hansa.app.service.SMSService;
 import com.hansa.app.service.SequenceService;
 import com.hansa.app.service.TransService;
 import com.hansa.app.service.TutorService;
@@ -35,12 +36,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Calendar;
 import static java.util.Calendar.YEAR;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -104,6 +106,11 @@ public class TeacherResource {
 
     @Autowired
     private SequenceService sequenceService;
+    
+    @Autowired
+    private SMSService smsService;
+    
+    private static final Log log = LogFactory.getFactory().getInstance(TeacherResource.class);
 
     @RequestMapping(value = "/zip/{id}", method = RequestMethod.DELETE)
     public void deleteZip(@PathVariable("id") Long id) {
@@ -144,6 +151,21 @@ public class TeacherResource {
 
         t.setOtpValidated(true);
         tutorRepo.save(t);
+    }
+    
+    
+     @RequestMapping(value = "/{id}/resendOtp")
+    public void resendOtp(@PathVariable("id") Long id) {
+
+        Tutor t = tutorRepo.getById(id);
+        if (t.isOtpValidated()) {
+            return;
+        }
+        try {
+            smsService.sendSMS(t.getMobile(), t.getOtp());
+        } catch(Exception e) {
+            throw new RequestException("Error is sending sms "+e.getMessage());
+        }
     }
 
     @RequestMapping(value = "/{id}/map", method = RequestMethod.POST)
@@ -306,6 +328,11 @@ public class TeacherResource {
         String s = System.currentTimeMillis() + "";
         updated.setOtp(s.substring(0, 4));
         updated.setOtpValidated(false);
+        try {
+            smsService.sendSMS(tutor.getMobile(), updated.getOtp());
+        } catch(Exception e) {
+            log.warn("Send sms failed "+e.getMessage());
+        }
         tutorRepo.save(updated);
         System.out.println("ID for new tutor is " + updated.getId());
         if (tutor.getMapping() != null) {

@@ -20,6 +20,7 @@ com/hansa/app/proxy/TestProxy.class
 com/hansa/app/data/Address.class
 com/hansa/app/Application$SwaggerConfig.class
 com/hansa/app/data/Student.class
+com/hansa/app/data/Faq.class
 com/hansa/app/data/ZIpCode.class
 com/hansa/app/resource/Test.class
 com/hansa/app/resource/AdminResource.class
@@ -42,12 +43,15 @@ com/hansa/app/error/ErrorResponse.class
 com/hansa/app/search/SearchSpecification.class
 com/hansa/app/resource/JobApplicationResource.class
 com/hansa/app/data/Role.class
+com/hansa/app/data/FaqCategory.class
 com/hansa/app/repo/TutorRepo.class
 com/hansa/app/model/StudentAppointment.class
 com/hansa/app/data/NotifData.class
 com/hansa/app/service/MapService.class
 com/hansa/app/resource/TransResource.class
+com/hansa/app/repo/FaqRepo.class
 com/hansa/app/service/S3Service.class
+com/hansa/app/resource/FaqResource.class
 com/hansa/app/data/JobType.class
 com/hansa/app/data/State.class
 com/hansa/app/interceptor/AppInterceptor.class

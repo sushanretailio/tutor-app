@@ -16,6 +16,7 @@ com/hansa/app/data/UserRole.class
 com/hansa/app/data/JobStatusData.class
 com/hansa/app/resource/JobResource.class
 com/hansa/app/data/Experience.class
+com/hansa/app/data/TutorOtp.class
 com/hansa/app/proxy/TestProxy.class
 com/hansa/app/data/Address.class
 com/hansa/app/Application$SwaggerConfig.class
@@ -77,6 +78,7 @@ com/hansa/app/data/Job.class
 com/hansa/app/error/ErrorHandler.class
 com/hansa/app/service/TransService.class
 com/hansa/app/data/ClassSubjectMapping.class
+com/hansa/app/search/TutorSearchSpec.class
 com/hansa/app/service/TutorService.class
 com/hansa/app/repo/ReviewRepo.class
 com/hansa/app/repo/JobApplicationRepo.class

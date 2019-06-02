@@ -23,10 +23,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class S3Service {
     
-    final String accessKeyid = "AKIAI3JLVOBQH46ZK6BQ";
-    final String secretKey = "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";
+    final String accessKeyid = "AKIAI34XZCAMMGEFMSWA";
+    final String secretKey = "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";
     final String bucket = "mytadata";
-    final String baseUrl = "https://s3.ap-south-1.amazonaws.com/tutor-files";
+    final String baseUrl = "https://s3.ap-south-1.amazonaws.com/mytadata";
     
     
     public String save(byte[] data, String type,String key, DocumentType documentType) {

@@ -47,11 +47,13 @@
 /Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/resource/SearchResource.java
 /Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/repo/ClassSubjectMapRepo.java
 /Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/data/Job.java
+/Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/data/TutorOtp.java
 /Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/data/Experience.java
 /Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/data/TutorType.java
 /Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/service/MailUtil.java
 /Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/service/SequenceService.java
 /Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/data/UserStatus.java
+/Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/search/TutorSearchSpec.java
 /Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/repo/StudentRepo.java
 /Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/repo/JobRepo.java
 /Users/sushant/scratchpad/tutor-app/src/main/java/com/hansa/app/model/ConfigData.java

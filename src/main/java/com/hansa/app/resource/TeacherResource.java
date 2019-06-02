@@ -13,6 +13,7 @@ import com.hansa.app.data.TransType;
 import com.hansa.app.data.TransactionData;
 import com.hansa.app.repo.TutorRepo;
 import com.hansa.app.data.Tutor;
+import com.hansa.app.data.TutorOtp;
 import com.hansa.app.data.User;
 import com.hansa.app.data.ZIpCode;
 import com.hansa.app.error.RequestException;
@@ -139,13 +140,15 @@ public class TeacherResource {
     }
 
     @RequestMapping(value = "/{id}/validateOtp")
-    public void validateOtp(@PathVariable("id") Long id, @RequestBody String otp) {
+    public void validateOtp(@PathVariable("id") Long id, @RequestBody TutorOtp otp) {
 
+        log.info("Tutor Id "+id+", Otp "+otp.getOtp());
         Tutor t = tutorRepo.getById(id);
+        log.info("Tutor Id "+id+", Otp "+otp.getOtp()+", Original Otp "+t.getOtp());
         if (t.isOtpValidated()) {
             return;
         }
-        if (!t.getOtp().equalsIgnoreCase(otp)) {
+        if (!t.getOtp().equalsIgnoreCase(otp.getOtp())) {
             throw new RequestException("Opt mismatch.");
         }
 
